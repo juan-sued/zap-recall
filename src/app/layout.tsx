@@ -1,15 +1,15 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { Poppins } from 'next/font/google'
+import { Recursive } from 'next/font/google'
 import 'animate.css'
 import { ReactNode } from 'react'
 import Providers from './providers'
 import Header from '@/components/layout/Header'
 import { siteConfig } from '@/config/site'
 
-const poppins = Poppins({
+const poppins = Recursive({
   subsets: ['latin'],
-  weight: ['200', '300', '400', '500', '600', '700'],
+  weight: ['300', '400', '500', '600', '700', '800', '900', '1000'],
 })
 export const metadata: Metadata = {
   title: siteConfig.title,

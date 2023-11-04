@@ -66,6 +66,53 @@
   }
 }
 
+
+/* width */
+::-webkit-scrollbar {
+  width: 0px;
+  -ms-overflow-style: none;
+scrollbar-width: none;
+overflow-x: hidden;
+  overflow-y: hidden;
+  display: none;
+
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+ display: none;
+}
+
+ @media (min-width: 768px) {
+  /* width */
+  ::-webkit-scrollbar {
+    width: 5px;
+    overflow-y: scroll;
+    display: block;
+    scrollbar-width: thin;
+  background-color: rgba(255, 255, 255, 0.05);
+
+  }
+
+
+  ::-webkit-scrollbar-track {
+    display: block;
+    width: 15px;
+    background-color: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+
+    background-color: rgba(255, 255, 255, 0.5) ;
+    width: 10px;
+    border-radius: 10px;
+
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: white ;
+  }
+
+
+}
 @layer base {
   * {
     @apply border-border;

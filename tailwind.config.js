@@ -20,7 +20,9 @@ module.exports = {
       colors: {
         pinkTheme: { 500: '#fb6b6b' },
         blueTheme: { 500: '#030014' },
-
+        screen: {
+          'screen-1150': '1150px',
+        },
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
