@@ -12,7 +12,7 @@ export default function ButtonsMenu() {
       link: '#',
     },
     {
-      title: 'Refêrencias',
+      title: 'Dashboard',
       link: '#',
     },
     {

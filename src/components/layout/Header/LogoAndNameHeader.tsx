@@ -8,7 +8,7 @@ const righteous = Righteous({
 export default function LogoAndNameHeader() {
   return (
     <>
-      <div className="flex space-x-5 w-1/3 items-center ">
+      <div className="flex space-x-5 w-1/3 items-center transition-all">
         <Image
           src="/image/logo.png"
           width="1080"
