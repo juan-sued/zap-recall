@@ -20,7 +20,7 @@ export default function Header() {
     }
   }, [])
 
-  const className = `px-5 py-6 bg-pinkTheme-500 bg-opacity-90 fixed top-0 left-0 w-full z-10 flex justify-between transition-all dark:bg-blueTheme-500 ${
+  const className = `px-5 py-6 bg-pinkTheme-500 bg-opacity-70 fixed top-0 left-0 w-full z-10 flex backdrop-blur-md justify-between transition-all dark:bg-blueTheme-500 dark:bg-opacity-90 h-[96px]    ${
     scrollHeight > 1 ? 'drop-shadow-lg' : ''
   }`
 
@@ -29,7 +29,7 @@ export default function Header() {
       <header className={className}>
         <LogoAndNameHeader />
         <MenuNavBar />
-        <div className="hidden md:flex md:w-1/3 md:justify-end ">
+        <div className="hidden md:flex md:w-1/3 md:justify-end">
           <ThemeSwitcher />
         </div>
         <MenuMobile />

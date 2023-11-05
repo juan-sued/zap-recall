@@ -1,19 +1,18 @@
-import { IZapBasic } from '@/components/Home/ListZaps'
 import { Button } from '@/components/ui/button'
 import {
   Card,
   CardHeader,
   CardTitle,
   CardDescription,
-  CardContent,
   CardFooter,
 } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
+import { IZapBasic } from '@/interfaces/zapInterfaces'
 
 import { cn } from '@/lib/utils'
 import { useEffect, useState } from 'react'
 
-interface CardZap extends IZapBasic {
+interface CardZap extends Omit<IZapBasic, 'difficulty'> {
   className?: string
 }
 export default function CardZap({
@@ -21,7 +20,6 @@ export default function CardZap({
   title,
   description,
   percentEndings,
-  difficulty,
   attempts,
   updatedAt,
   creatAt,
@@ -46,7 +44,7 @@ export default function CardZap({
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
-      <CardContent className="grid gap-4"></CardContent>
+
       <CardFooter className="text-muted-foreground  gap-4 px-14  flex flex-col justify-center  sm:flex-row sm:px-6 sm:gap-0 sm:justify-between">
         <Button variant="ghost">
           <div>
