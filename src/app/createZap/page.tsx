@@ -87,32 +87,39 @@ const zapFormSchema = z.object({
       message: 'A descrição deve conter menos de 100 caracteres.',
     }),
 
-  category: z.string({
-    required_error: 'Por favor selecione uma categoria.',
-  }),
+  category: z.string().min(1, { message: 'Escolha uma categoria.' }),
+  newCategory: z
+    .string()
+    .min(2, {
+      message: 'A categoria deve conter mais de 2 caracteres.',
+    })
+    .max(30, {
+      message: 'A categoria deve conter menos de 30 caracteres.',
+    })
+    .optional(),
 
   questions: z
     .array(
       z.object({
-        pergunta: z
+        question: z
           .string()
           .min(10, {
-            message: 'A descrição deve conter mais de 10 caracteres.',
+            message: 'A pergunta deve conter mais de 10 caracteres.',
           })
           .max(100, {
-            message: 'A descrição deve conter menos de 100 caracteres.',
+            message: 'A pergunta deve conter menos de 100 caracteres.',
           }),
-        resposta: z
+        response: z
           .string()
           .min(10, {
-            message: 'A descrição deve conter mais de 10 caracteres.',
+            message: 'A reposta deve conter mais de 10 caracteres.',
           })
           .max(100, {
-            message: 'A descrição deve conter menos de 100 caracteres.',
+            message: 'A reposta deve conter menos de 100 caracteres.',
           }),
       }),
     )
-    .optional(),
+    .length(1),
 })
 
 type ZapFormValues = z.infer<typeof zapFormSchema>
@@ -123,8 +130,8 @@ const defaultValues: Partial<ZapFormValues> = {
   category: '',
   questions: [
     {
-      pergunta: '',
-      resposta: '',
+      question: '',
+      response: '',
     },
   ],
 }
@@ -158,8 +165,8 @@ export default function CreateZapPage() {
       <section className="titleCreateZap ">
         <h1 className="drop-shadow text-5xl">Criar Zap</h1>
       </section>
-      <section className="sectionFormCreateZap h-full w-full p-16 px-56">
-        <Card className="w-full  h-full grid content-between shadow-md  shadow-[rgba(0,0,0,0.2)] transition-all  hover:cursor-pointer hover:shadow-lg sm:min-w-fit">
+      <section className="sectionFormCreateZap h-full w-full pt-16 flex justify-center">
+        <Card className=" max-w-xs  h-full grid content-between shadow-md  shadow-[rgba(0,0,0,0.2)] transition-all   sm:min-w-fit">
           <CardHeader>
             <CardTitle>Rápido e Fácil</CardTitle>
             <CardDescription>
@@ -173,113 +180,139 @@ export default function CreateZapPage() {
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-8"
               >
-                <FormField
-                  control={form.control}
-                  name="title"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Título</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Fisiologia Humana: Sistema Cardiovascular"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormDescription>
-                        Este é título do seu Zap.
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="description"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Descrição</FormLabel>
-                      <FormControl>
-                        <Textarea
-                          placeholder="Explore o funcionamento do sistema circulatório humano, incluindo o coração, vasos sanguíneos e circulação sanguínea."
-                          className="resize-none"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormDescription>
-                        Uma breve descrição do Zap.
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="category"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col">
-                      <FormLabel>Categoria</FormLabel>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              type="button"
-                              variant="outline"
-                              role="combobox"
-                              className={cn(
-                                'w-[200px] justify-between',
-                                !field.value && 'text-muted-foreground',
-                              )}
-                            >
-                              {field.value
-                                ? categories.find(
-                                    (category) =>
-                                      category.value === field.value,
-                                  )?.label
-                                : 'Selecionar categoria'}
-                              <MoveVertical className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-[200px] p-0">
-                          <Command>
-                            <CommandInput placeholder="Buscar categoria..." />
-                            <CommandEmpty>
-                              Nenhuma categoria encontrada.
-                            </CommandEmpty>
+                <section className="titleAndDescription flex flex-col gap-6 ">
+                  <FormField
+                    control={form.control}
+                    name="title"
+                    render={({ field }) => (
+                      <FormItem className="w-full">
+                        <FormLabel>Título</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Fisiologia Humana: Sistema Cardiovascular"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormDescription>
+                          Este é título do seu Zap.
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="description"
+                    render={({ field }) => (
+                      <FormItem className="w-full">
+                        <FormLabel>Descrição</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            placeholder="Explore o funcionamento do sistema circulatório humano, incluindo o coração, vasos sanguíneos e circulação sanguínea."
+                            className="resize-none"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormDescription>
+                          Uma breve descrição do Zap.
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </section>
 
-                            <CommandGroup>
-                              <ScrollArea className="h-60">
-                                {categories.map((category) => (
-                                  <CommandItem
-                                    value={category.label}
-                                    key={category.value}
-                                    onSelect={() => {
-                                      form.setValue('category', category.value)
-                                    }}
-                                  >
-                                    <CheckIcon
-                                      className={cn(
-                                        'mr-2 h-4 w-4',
-                                        category.value === field.value
-                                          ? 'opacity-100'
-                                          : 'opacity-0',
-                                      )}
-                                    />
-                                    {category.label}
-                                  </CommandItem>
-                                ))}
-                              </ScrollArea>
-                            </CommandGroup>
-                          </Command>
-                        </PopoverContent>
-                      </Popover>
-                      <FormDescription>
-                        Escolha a categoria do seu Zap
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                <section className="sectionCategory flex  gap-10 justify-between items-start ">
+                  <FormField
+                    control={form.control}
+                    name="category"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-col w-80">
+                        <FormLabel className="leading-5">Categoria</FormLabel>
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <FormControl>
+                              <Button
+                                type="button"
+                                variant="outline"
+                                role="combobox"
+                                className={cn(
+                                  'w-[200px] justify-between',
+                                  !field.value && 'text-muted-foreground',
+                                )}
+                              >
+                                {field.value
+                                  ? categories.find(
+                                      (category) =>
+                                        category.value === field.value,
+                                    )?.label
+                                  : 'Selecionar categoria'}
+                                <MoveVertical className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                              </Button>
+                            </FormControl>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-[200px] p-0">
+                            <Command>
+                              <CommandInput placeholder="Buscar categoria..." />
+                              <CommandEmpty>
+                                Nenhuma categoria encontrada.
+                              </CommandEmpty>
+
+                              <CommandGroup>
+                                <ScrollArea className="h-60 ">
+                                  {categories.map((category) => (
+                                    <CommandItem
+                                      value={category.label}
+                                      key={category.value}
+                                      className="cursor-pointer"
+                                      onSelect={() => {
+                                        form.setValue(
+                                          'category',
+                                          category.value,
+                                        )
+                                      }}
+                                    >
+                                      <CheckIcon
+                                        className={cn(
+                                          'mr-2 h-4 w-4',
+                                          category.value === field.value
+                                            ? 'opacity-100'
+                                            : 'opacity-0',
+                                        )}
+                                      />
+                                      {category.label}
+                                    </CommandItem>
+                                  ))}
+                                </ScrollArea>
+                              </CommandGroup>
+                            </Command>
+                          </PopoverContent>
+                        </Popover>
+                        <FormDescription>
+                          Escolha a categoria do seu Zap
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="newCategory"
+                    render={({ field }) => (
+                      <FormItem className="w-full">
+                        <FormLabel>Nova categoria</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Biologia Molecular" {...field} />
+                        </FormControl>
+                        <FormDescription>
+                          Não encontrou? Crie uma!
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </section>
 
                 <div>
                   {fields.map((field, index) => (
@@ -289,14 +322,15 @@ export default function CreateZapPage() {
                       key={field.id}
                       render={() => (
                         <FormItem>
-                          <div className="pb-8">
+                          <div className="pb-6">
                             <FormLabel className={cn(index !== 0 && 'sr-only')}>
                               Perguntas
                             </FormLabel>
                             <FormDescription
                               className={cn(index !== 0 && 'sr-only')}
                             >
-                              Agora vamos criar as perguntas e respostas.
+                              Agora vamos criar as perguntas e respostas. (Devem
+                              possuir ao menos 10 caracteres)
                             </FormDescription>
                           </div>
 
@@ -309,7 +343,7 @@ export default function CreateZapPage() {
                                     render={({ field }) => (
                                       <Textarea {...field} />
                                     )}
-                                    name={`questions.${index}.pergunta`}
+                                    name={`questions.${index}.question`}
                                     control={form.control}
                                   />
                                 </FormControl>
@@ -321,13 +355,13 @@ export default function CreateZapPage() {
                                     render={({ field }) => (
                                       <Textarea {...field} />
                                     )}
-                                    name={`questions.${index}.resposta`}
+                                    name={`questions.${index}.response`}
                                     control={form.control}
                                   />
                                 </FormControl>
                               </div>
                             </div>
-                            <FormMessage />
+
                             <Button
                               type="button"
                               className="w-full bg-destructive hover:bg-red-600"
@@ -346,10 +380,10 @@ export default function CreateZapPage() {
                       variant="outline"
                       size="sm"
                       className="mt-2 flex gap-3 w-full text-muted-foreground"
-                      onClick={() => append({ pergunta: '', resposta: '' })}
+                      onClick={() => append({ question: '', response: '' })}
                     >
                       <Plus className="w-4" />
-                      Adicionar pergunta
+                      Adicionar question
                     </Button>
                   </Link>
                 </div>
