@@ -5,7 +5,7 @@ export default function ButtonsMenu() {
   const listItemMenu = [
     {
       title: 'Início',
-      link: '#',
+      link: '/',
     },
     {
       title: 'Tecnologias',
