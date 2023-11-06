@@ -35,7 +35,7 @@ import {
 import { ScrollArea } from '@/components/ui/scroll-area'
 
 import { Textarea } from '@/components/ui/textarea'
-import { toast } from '@/components/ui/use-toast'
+import { useToast } from '@/components/ui/use-toast'
 import { cn } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 
@@ -111,7 +111,7 @@ const zapFormSchema = z.object({
           }),
         response: z
           .string()
-          .min(10, {
+          .min(1, {
             message: 'A reposta deve conter mais de 10 caracteres.',
           })
           .max(100, {
@@ -119,7 +119,7 @@ const zapFormSchema = z.object({
           }),
       }),
     )
-    .length(1),
+    .min(1),
 })
 
 type ZapFormValues = z.infer<typeof zapFormSchema>
@@ -147,11 +147,13 @@ export default function CreateZapPage() {
     control: form.control,
     name: 'questions',
   })
+  const { toast } = useToast()
 
   function onSubmit(data: ZapFormValues) {
-    console.log(data)
+    console.log(data.questions)
     toast({
-      title: 'You submitted the following values:',
+      variant: 'sucess',
+      title: 'Você envou os seguintes valores:',
       description: (
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
           <code className="text-white">{JSON.stringify(data, null, 2)}</code>
@@ -159,14 +161,13 @@ export default function CreateZapPage() {
       ),
     })
   }
-
   return (
     <Main className="animate__animated animate__fadeIn">
       <section className="titleCreateZap ">
         <h1 className="drop-shadow text-5xl">Criar Zap</h1>
       </section>
-      <section className="sectionFormCreateZap h-full w-full pt-16 flex justify-center">
-        <Card className=" max-w-xs  h-full grid content-between shadow-md  shadow-[rgba(0,0,0,0.2)] transition-all   sm:min-w-fit">
+      <section className="sectionFormCreateZap h-full w-full p-5 flex justify-center">
+        <Card className="max-w-5xl min-w-[350px]  h-full flex flex-col content-between shadow-md  shadow-[hsla(0,0%,0%,0)] transition-all   ">
           <CardHeader>
             <CardTitle>Rápido e Fácil</CardTitle>
             <CardDescription>
@@ -222,7 +223,7 @@ export default function CreateZapPage() {
                   />
                 </section>
 
-                <section className="sectionCategory flex  gap-10 justify-between items-start ">
+                <section className="sectionCategory flex flex-col  gap-10 justify-between items-start sm:flex-row ">
                   <FormField
                     control={form.control}
                     name="category"
@@ -329,15 +330,14 @@ export default function CreateZapPage() {
                             <FormDescription
                               className={cn(index !== 0 && 'sr-only')}
                             >
-                              Agora vamos criar as perguntas e respostas. (Devem
-                              possuir ao menos 10 caracteres)
+                              Agora vamos criar as perguntas e respostas.
                             </FormDescription>
                           </div>
 
                           <div className="w-full grid gap-7 bg-slate-100 border dark:bg-slate-950 rounded-lg transition-all  p-5  animate__animated  animate__fadeInLeft">
-                            <div className="flex justify-between gap-7">
+                            <div className="flex flex-col justify-between  gap-7 sm:flex-row ">
                               <div className=" w-full ">
-                                <FormLabel>Pergunta {index + 1}</FormLabel>
+                                <FormLabel>Pergunta {index + 1} </FormLabel>
                                 <FormControl>
                                   <Controller
                                     render={({ field }) => (
@@ -347,6 +347,9 @@ export default function CreateZapPage() {
                                     control={form.control}
                                   />
                                 </FormControl>
+                                <FormDescription>
+                                  Deve possuir ao menos 10 caracteres.
+                                </FormDescription>
                               </div>
                               <div className="w-full">
                                 <FormLabel>Resposta {index + 1}</FormLabel>
@@ -359,6 +362,9 @@ export default function CreateZapPage() {
                                     control={form.control}
                                   />
                                 </FormControl>
+                                <FormDescription>
+                                  Deve possuir ao menos 1 caracter.
+                                </FormDescription>
                               </div>
                             </div>
 
@@ -383,7 +389,7 @@ export default function CreateZapPage() {
                       onClick={() => append({ question: '', response: '' })}
                     >
                       <Plus className="w-4" />
-                      Adicionar question
+                      Adicionar Pergunta
                     </Button>
                   </Link>
                 </div>

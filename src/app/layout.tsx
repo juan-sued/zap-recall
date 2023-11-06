@@ -6,6 +6,7 @@ import { ReactNode } from 'react'
 import Providers from './providers'
 import Header from '@/components/layout/Header'
 import { siteConfig } from '@/config/site'
+import { Toaster } from '@/components/ui/toaster'
 
 const poppins = Recursive({
   subsets: ['latin'],
@@ -34,6 +35,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <Providers>
           <Header />
           {children}
+          <Toaster />
         </Providers>
       </body>
     </html>
