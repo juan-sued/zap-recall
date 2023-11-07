@@ -90,6 +90,8 @@ export default function FormCreateZap() {
       form.setError('category', {
         message: 'Uma categoria ou uma nova categoria deve ser selecionada',
       })
+
+      return
     }
     toast({
       variant: 'sucess',
