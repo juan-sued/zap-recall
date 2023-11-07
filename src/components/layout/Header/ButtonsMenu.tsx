@@ -8,8 +8,8 @@ export default function ButtonsMenu() {
       link: '/',
     },
     {
-      title: 'Tecnologias',
-      link: '#',
+      title: 'Login',
+      link: '/sign-in',
     },
     {
       title: 'Dashboard',

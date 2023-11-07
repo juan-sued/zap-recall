@@ -1,7 +1,7 @@
+import FormSignIn from './FormSignIn'
 import FormBasicTemplate from '@/components/shared/templates/FormBasicTemplate'
-import FormSignUp from './FormSignUp'
 
-export default function SignUpPage() {
+export default function SignInPage() {
   return (
     <FormBasicTemplate
       titlePage="Login"
@@ -9,7 +9,7 @@ export default function SignUpPage() {
       cardDescription="Entre e dê um Zap."
       className="max-w-lg"
     >
-      <FormSignUp />
+      <FormSignIn />
     </FormBasicTemplate>
   )
 }
