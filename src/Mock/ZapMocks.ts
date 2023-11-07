@@ -1,6 +1,6 @@
 import { IZapBasic } from '@/interfaces/zapInterfaces'
 
-const mockZaps: IZapBasic[] = [
+const ZAP_BASIC: IZapBasic[] = [
   {
     id: 1,
     title: 'Ciclo Celular e Divisão Celular',
@@ -11,6 +11,7 @@ const mockZaps: IZapBasic[] = [
     attempts: 25,
     creatAt: '10/10/2023',
     updatedAt: '12/10/2023',
+    category: 'Biologia Celular',
   },
   {
     id: 2,
@@ -22,6 +23,7 @@ const mockZaps: IZapBasic[] = [
     attempts: 50,
     creatAt: '15/09/2023',
     updatedAt: '18/09/2023',
+    category: 'Genética',
   },
   {
     id: 3,
@@ -33,6 +35,7 @@ const mockZaps: IZapBasic[] = [
     attempts: 100,
     creatAt: '20/08/2023',
     updatedAt: '22/08/2023',
+    category: 'Fisiologia Humana',
   },
   {
     id: 4,
@@ -44,6 +47,7 @@ const mockZaps: IZapBasic[] = [
     attempts: 40,
     creatAt: '05/11/2023',
     updatedAt: '07/11/2023',
+    category: 'Ecologia',
   },
   {
     id: 5,
@@ -55,6 +59,7 @@ const mockZaps: IZapBasic[] = [
     attempts: 80,
     creatAt: '08/11/2023',
     updatedAt: '10/11/2023',
+    category: 'Biologia Celular',
   },
   {
     id: 6,
@@ -66,6 +71,7 @@ const mockZaps: IZapBasic[] = [
     attempts: 60,
     creatAt: '12/11/2023',
     updatedAt: '15/11/2023',
+    category: 'Genética',
   },
   {
     id: 7,
@@ -77,6 +83,7 @@ const mockZaps: IZapBasic[] = [
     attempts: 100,
     creatAt: '18/11/2023',
     updatedAt: '20/11/2023',
+    category: 'Neurociência',
   },
   {
     id: 8,
@@ -88,6 +95,7 @@ const mockZaps: IZapBasic[] = [
     attempts: 20,
     creatAt: '22/11/2023',
     updatedAt: '25/11/2023',
+    category: 'Evolução',
   },
   {
     id: 9,
@@ -99,6 +107,7 @@ const mockZaps: IZapBasic[] = [
     attempts: 35,
     creatAt: '30/11/2023',
     updatedAt: '02/12/2023',
+    category: 'Microbiologia',
   },
   {
     id: 10,
@@ -110,8 +119,9 @@ const mockZaps: IZapBasic[] = [
     attempts: 90,
     creatAt: '05/12/2023',
     updatedAt: '07/12/2023',
+    category: 'Imunologia',
   },
 ]
 
-const zapMocks = { mockZaps }
+const zapMocks = { ZAP_BASIC }
 export default zapMocks

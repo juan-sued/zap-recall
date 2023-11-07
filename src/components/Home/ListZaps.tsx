@@ -13,7 +13,6 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Search } from 'lucide-react'
-import { axiosAdvicesLip } from '@/services/axios'
 import CardZap from '../shared/Cards/CardZap'
 import zapMocks from '@/Mock/ZapMocks'
 import AddZapButton from '../shared/Buttons/AddZapButton'
@@ -36,9 +35,9 @@ export default function ListZaps() {
     const searchQuery = event.target.value
 
     try {
-      const response = await axiosAdvicesLip.get(`/${searchQuery}`)
-      setListCardResponse(response.data)
-      console.log(response.data)
+      // const response = await axiosAdvicesLip.get(`/${searchQuery}`)
+      //    setListCardResponse(response.data)
+      //  console.log(response.data)
     } catch (error) {
       console.error('Erro ao buscar resultados:', error)
     }
@@ -88,7 +87,7 @@ export default function ListZaps() {
         </Form>
         <div className="listCardZaps  w-full h-full p-8 sm:p-20 ">
           <div className=" h-full grid grid-cols-1  gap-4  min-[890px]:grid-cols-2 min-[1270px]:grid-cols-3 min-[1580px]:grid-cols-4  place-items-center">
-            {zapMocks.mockZaps.map((zap, index) => {
+            {zapMocks.ZAP_BASIC.map((zap, index) => {
               let bgColor = 'bg-black'
 
               switch (zap.difficulty) {
