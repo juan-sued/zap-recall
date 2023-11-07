@@ -13,7 +13,7 @@ export default function ButtonsMenu() {
     },
     {
       title: 'Dashboard',
-      link: '#',
+      link: '/dashboard',
     },
     {
       title: 'Feedbacks',

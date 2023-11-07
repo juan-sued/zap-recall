@@ -10,9 +10,12 @@ export const signUpFormSchema = z
       })
       .max(60, {
         message: 'O nome deve conter menos de 60 caracteres.',
+      })
+      .regex(/^[a-zA-ZÀ-ÖØ-öø-ÿ\s]+$/, {
+        message:
+          'O nome não pode conter caracteres especiais ou números, mas a acentuação é permitida.',
       }),
     email: z.string().trim().email('Digite um email válido'),
-
     password: z
       .string()
       .trim()

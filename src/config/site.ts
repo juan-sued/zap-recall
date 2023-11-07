@@ -13,7 +13,7 @@ export const siteConfig = {
     'React',
     'Tailwind CSS',
     'Server Components',
-    'Radix UI',
+    'Shadcn UI',
   ],
   authors: [
     {

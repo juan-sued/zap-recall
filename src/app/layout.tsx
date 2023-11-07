@@ -35,6 +35,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <Providers>
           <Header />
           {children}
+
           <Toaster />
         </Providers>
       </body>

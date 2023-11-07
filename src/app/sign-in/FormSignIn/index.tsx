@@ -60,7 +60,7 @@ export default function FormSignIn() {
                 <FormControl>
                   <Input placeholder="zapreacall@gmail.com" {...field} />
                 </FormControl>
-                <FormDescription>Seu melhor email.</FormDescription>
+                <FormDescription>Digite seu email.</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -70,11 +70,11 @@ export default function FormSignIn() {
             name="password"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Password</FormLabel>
+                <FormLabel>Senha</FormLabel>
                 <FormControl>
                   <Input placeholder="senhaSecreta123" {...field} />
                 </FormControl>
-                <FormDescription>Uma mega senha.</FormDescription>
+                <FormDescription>Digite sua senha.</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
