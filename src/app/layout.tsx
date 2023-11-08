@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 import { Recursive } from 'next/font/google'
 import 'animate.css'
 import { ReactNode } from 'react'
-import Providers from './providers'
+import Providers from '../providers/Index'
 import Header from '@/components/layout/Header'
 import { siteConfig } from '@/config/site'
 import { Toaster } from '@/components/ui/toaster'
@@ -35,7 +35,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <Providers>
           <Header />
           {children}
-
           <Toaster />
         </Providers>
       </body>

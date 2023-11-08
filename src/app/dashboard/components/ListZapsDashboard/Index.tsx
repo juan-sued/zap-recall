@@ -1,5 +1,5 @@
 import zapMocks from '@/Mock/ZapMocks'
-import CardListSimpleFlat from './CardListSimpleFlat'
+import CardListSimpleFlat from '../../../../components/shared/Cards/CardListSimpleFlat'
 
 export function ListSimpleFlat() {
   return (
@@ -22,10 +22,10 @@ export function ListSimpleFlat() {
         return (
           <CardListSimpleFlat
             key={index}
-            name={zap.title}
-            email={zap.description}
+            title={zap.title}
+            description={zap.description}
             avatarFallback={zap.category[0]}
-            value={`${zap.percentEndings}%`}
+            value={zap.percentEndings}
             className={bgColor}
           />
         )

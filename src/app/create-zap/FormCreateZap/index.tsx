@@ -86,7 +86,10 @@ export default function FormCreateZap() {
 
   function onSubmit(data: ZapFormValues) {
     // validate categories
-    if (data.category === '' && data.newCategory === '') {
+    if (
+      (data.category && data.newCategory) ||
+      (data.category === '' && data.newCategory === '')
+    ) {
       form.setError('category', {
         message: 'Uma categoria ou uma nova categoria deve ser selecionada',
       })
