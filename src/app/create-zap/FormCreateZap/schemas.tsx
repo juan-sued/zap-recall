@@ -27,26 +27,24 @@ export const zapFormSchema = z.object({
     })
     .optional(),
 
-  questions: z
-    .array(
-      z.object({
-        question: z
-          .string()
-          .min(10, {
-            message: 'A pergunta deve conter mais de 10 caracteres.',
-          })
-          .max(100, {
-            message: 'A pergunta deve conter menos de 100 caracteres.',
-          }),
-        response: z
-          .string()
-          .min(1, {
-            message: 'A reposta deve conter mais de 10 caracteres.',
-          })
-          .max(100, {
-            message: 'A reposta deve conter menos de 100 caracteres.',
-          }),
-      }),
-    )
-    .nonempty(),
+  questions: z.array(
+    z.object({
+      question: z
+        .string()
+        .min(10, {
+          message: 'A pergunta deve conter mais de 10 caracteres.',
+        })
+        .max(100, {
+          message: 'A pergunta deve conter menos de 100 caracteres.',
+        }),
+      response: z
+        .string()
+        .min(1, {
+          message: 'A reposta deve conter mais de 10 caracteres.',
+        })
+        .max(100, {
+          message: 'A reposta deve conter menos de 100 caracteres.',
+        }),
+    }),
+  ),
 })

@@ -36,6 +36,7 @@ import { useToast } from '@/components/ui/use-toast'
 import { ZapFormValues } from './types'
 
 const categories = [
+  { label: 'Nenhum', value: '' },
   { label: 'Matemática', value: 'matematica' },
   { label: 'Português', value: 'portugues' },
   { label: 'História', value: 'historia' },
@@ -86,12 +87,20 @@ export default function FormCreateZap() {
 
   function onSubmit(data: ZapFormValues) {
     // validate categories
-    if (
-      (data.category && data.newCategory) ||
-      (data.category === '' && data.newCategory === '')
-    ) {
+    if (data.category && data.newCategory) {
       form.setError('category', {
-        message: 'Uma categoria ou uma nova categoria deve ser selecionada',
+        message: 'Escolha apenas uma.',
+      })
+    } else if (data.category === '' && data.newCategory === '') {
+      form.setError('category', {
+        message: 'Não é possível criar sem uma categoria.',
+      })
+
+      return
+    } else if (data.questions.length === 0) {
+      toast({
+        variant: 'destructive',
+        title: 'Deve ser criado ao menos uma pergunta.',
       })
 
       return

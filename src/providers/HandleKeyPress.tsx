@@ -11,7 +11,6 @@ export default function HandleKeyPressProvider({
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
-      event.preventDefault()
       if (event.ctrlKey) {
         switch (event.key) {
           case 'i':
@@ -30,7 +29,6 @@ export default function HandleKeyPressProvider({
             router.push('/config')
             break
           default:
-            break
         }
       }
     }

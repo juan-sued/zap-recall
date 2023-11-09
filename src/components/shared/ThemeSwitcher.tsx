@@ -18,7 +18,7 @@ export default function ThemeSwitcher() {
   }
 
   return (
-    <div className="relative scale-75 left-4">
+    <div className="relative scale-[80%] left-3">
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
