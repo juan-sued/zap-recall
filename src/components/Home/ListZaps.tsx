@@ -107,6 +107,7 @@ export default function ListZaps() {
                   key={index}
                   id={zap.id}
                   title={zap.title}
+                  category={zap.category}
                   description={zap.description}
                   percentEndings={zap.percentEndings}
                   updatedAt={zap.updatedAt}

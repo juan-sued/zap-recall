@@ -11,7 +11,7 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { LayoutDashboard, LogIn, Settings, User, User2 } from 'lucide-react'
+import { LayoutDashboard, Settings, User, User2 } from 'lucide-react'
 import { useTheme } from 'next-themes'
 
 export function UserNav() {
