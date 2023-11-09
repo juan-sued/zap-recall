@@ -1,48 +1,39 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { META_DATA_LIST } from '@/Mock/MetaDataMock'
 import CardResume from './CardResume'
-import { List } from 'lucide-react'
-
-interface IMetaDataList {
-  totalAttempt: number
-  peopleReached: number
-}
-
-const META_DATA_LIST: IMetaDataList = {
-  totalAttempt: 420,
-  peopleReached: 230,
-}
+import { ClipboardList, Crown, Smile, ThumbsUp } from 'lucide-react'
 
 export default function ListResumes() {
   return (
     <>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <CardResume
-          title="Total de Tentativas"
-          value={`${META_DATA_LIST.totalAttempt}`}
-          valueDetail="Número de tentativas em seus Zaps!"
+          title="Total de Zaps"
+          value={`${META_DATA_LIST.allZaps.totalZaps}`}
+          valueDetail={`Uma média de ${META_DATA_LIST.allZaps.percentAverageCompletion}% de conclusões por zap.`}
         >
-          <List />
+          <ClipboardList />
         </CardResume>
         <CardResume
-          title="Total de Pessoas Alcançadas"
-          value={`${META_DATA_LIST.peopleReached}`}
-          valueDetail="Número de pessoas que você ajudou!"
+          title="Total de likes"
+          value={`${META_DATA_LIST.likes.totalLikes}`}
+          valueDetail={`Uma média de ${META_DATA_LIST.likes.averageCompletion} likes por zap.`}
         >
-          <List />
+          <ThumbsUp />
         </CardResume>
         <CardResume
-          title="Total de Pessoas Alcançadas"
-          value={`${META_DATA_LIST.peopleReached}`}
-          valueDetail="Número de pessoas que você ajudou!"
+          title="Zap campeão"
+          value={`${META_DATA_LIST.bestZap.title}`}
+          valueDetail={`${META_DATA_LIST.bestZap.percentCompletion}% de conclusões e ${META_DATA_LIST.bestZap.likes} likes!`}
+          classNameValue="text-md"
         >
-          <List />
+          <Crown />
         </CardResume>
         <CardResume
-          title="Total de Pessoas Alcançadas"
-          value={`${META_DATA_LIST.peopleReached}`}
-          valueDetail="Número de pessoas que você ajudou!"
+          title="Moral"
+          value={`${META_DATA_LIST.moral.title}`}
+          valueDetail={`Você tem ${META_DATA_LIST.moral.points} pontos de moral.`}
         >
-          <List />
+          <Smile />
         </CardResume>
       </div>
     </>

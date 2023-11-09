@@ -41,8 +41,8 @@ export default function DashboardPage() {
               <TabsTrigger value="analytics" disabled>
                 Analytics
               </TabsTrigger>
-              <TabsTrigger value="notifications" disabled>
-                Notificações
+              <TabsTrigger value="meus_zaps" disabled>
+                Meus Zaps
               </TabsTrigger>
             </TabsList>
             <TabsContent value="overview" className="space-y-4">
