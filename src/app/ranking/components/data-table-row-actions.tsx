@@ -19,7 +19,7 @@ import {
 
 import { elos } from '../data/data'
 import { taskSchema } from '../data/schema'
-import { MoreHorizontal, UserPlus2Icon } from 'lucide-react'
+import { MoreHorizontal, OptionIcon, UserPlus2Icon } from 'lucide-react'
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
@@ -41,13 +41,16 @@ export function DataTableRowActions<TData>({
           <span className="sr-only">Abrir menu</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-[160px]">
-        <DropdownMenuItem className="grid grid-cols-2    ">
+      <DropdownMenuContent align="end" className="w-[220px]">
+        <DropdownMenuItem className="flex justify-between">
           <UserPlus2Icon />
           <div>Solicitar amizade</div>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Ver detalhes</DropdownMenuItem>
+        <DropdownMenuItem className="flex justify-between">
+          <OptionIcon />
+          <div>Ver detalhes</div>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )
