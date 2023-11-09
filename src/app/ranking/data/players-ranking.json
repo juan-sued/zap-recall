@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "points": 2241,
+    "player": "Juan Sued",
+    "elo": "diamante"
+  },
+  {
+    "id": 2,
+    "points": 1985,
+    "player": "Maria Silva",
+    "elo": "platina"
+  },
+  {
+    "id": 3,
+    "points": 1760,
+    "player": "Pedro Oliveira",
+    "elo": "ouro"
+  },
+  {
+    "id": 4,
+    "points": 1550,
+    "player": "Ana Santos",
+    "elo": "prata"
+  },
+  {
+    "id": 5,
+    "points": 1312,
+    "player": "Luiz Costa",
+    "elo": "bronze"
+  },
+  {
+    "id": 6,
+    "points": 2175,
+    "player": "Luciana Ferreira",
+    "elo": "diamante"
+  },
+  {
+    "id": 7,
+    "points": 2043,
+    "player": "Rafael Alves",
+    "elo": "platina"
+  },
+  {
+    "id": 8,
+    "points": 1827,
+    "player": "Carla Lima",
+    "elo": "ouro"
+  },
+  {
+    "id": 9,
+    "points": 1689,
+    "player": "Miguel Santos",
+    "elo": "prata"
+  },
+  {
+    "id": 10,
+    "points": 1420,
+    "player": "Patrícia Oliveira",
+    "elo": "bronze"
+  },
+  {
+    "id": 11,
+    "points": 2302,
+    "player": "José Silva",
+    "elo": "diamante"
+  },
+  {
+    "id": 12,
+    "points": 1976,
+    "player": "Isabela Costa",
+    "elo": "platina"
+  },
+  {
+    "id": 13,
+    "points": 1752,
+    "player": "Hugo Alves",
+    "elo": "ouro"
+  },
+  {
+    "id": 14,
+    "points": 1538,
+    "player": "Fernanda Oliveira",
+    "elo": "prata"
+  },
+  {
+    "id": 15,
+    "points": 1305,
+    "player": "Ricardo Lima",
+    "elo": "bronze"
+  },
+  {
+    "id": 16,
+    "points": 2223,
+    "player": "Juliana Alves",
+    "elo": "diamante"
+  },
+  {
+    "id": 17,
+    "points": 2007,
+    "player": "André Santos",
+    "elo": "platina"
+  },
+  {
+    "id": 18,
+    "points": 1803,
+    "player": "Larissa Silva",
+    "elo": "ouro"
+  },
+  {
+    "id": 19,
+    "points": 1678,
+    "player": "Paulo Oliveira",
+    "elo": "prata"
+  },
+  {
+    "id": 20,
+    "points": 1455,
+    "player": "Amanda Costa",
+    "elo": "bronze"
+  }
+]

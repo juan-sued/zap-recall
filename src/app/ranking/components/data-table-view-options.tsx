@@ -1,6 +1,5 @@
 'use client'
 
-import { DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu'
 import { Table } from '@tanstack/react-table'
 
 import { Button } from '@/components/ui/button'
@@ -10,6 +9,7 @@ import {
   DropdownMenuContent,
   DropdownMenuLabel,
   DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { MoveHorizontalIcon } from 'lucide-react'
 

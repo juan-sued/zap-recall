@@ -1,20 +1,17 @@
 import fs from 'fs'
 import path from 'path'
 import { faker } from '@faker-js/faker'
+import { elos } from './data'
 
-import { labels, priorities, statuses } from './data'
-
-const tasks = Array.from({ length: 100 }, () => ({
-  id: `TASK-${faker.datatype.number({ min: 1000, max: 9999 })}`,
-  title: faker.hacker.phrase().replace(/^./, (letter) => letter.toUpperCase()),
-  status: faker.helpers.arrayElement(statuses).value,
-  label: faker.helpers.arrayElement(labels).value,
-  priority: faker.helpers.arrayElement(priorities).value,
+const playersRanking = Array.from({ length: 100 }, () => ({
+  id: faker.number.int({ min: 0, max: 9999 }),
+  player: faker.person.fullName(),
+  elo: faker.helpers.arrayElement(elos).value,
 }))
 
 fs.writeFileSync(
-  path.join(__dirname, 'tasks.json'),
-  JSON.stringify(tasks, null, 2),
+  path.join(__dirname, 'players-ranking.json'),
+  JSON.stringify(playersRanking, null, 2),
 )
 
-console.log('✅ Tasks data generated.')
+console.log('✅ Players Ranking data generated.')
