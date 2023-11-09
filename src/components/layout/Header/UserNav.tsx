@@ -73,6 +73,14 @@ export function UserNav() {
                   <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
                 </DropdownMenuItem>
               </Link>
+
+              <Link href="/ranking">
+                <DropdownMenuItem className="cursor-pointer">
+                  <LayoutDashboard className="mr-2 h-4 w-4" />
+                  <span>Ranking</span>
+                  <DropdownMenuShortcut>⌘3</DropdownMenuShortcut>
+                </DropdownMenuItem>
+              </Link>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>

@@ -19,7 +19,7 @@ import ListResumes from './components/ListResumes/Index'
 export default function DashboardPage() {
   return (
     <>
-      <div className="flex-col flex mt-20">
+      <div className="flex-col flex mt-20 animate__animated animate__fadeIn">
         <div className="flex-1 space-y-4 p-8 pt-6">
           <div className="flex flex-col sm:flex-row  items-center justify-between space-y-2">
             <div className=" w-full">
@@ -30,7 +30,7 @@ export default function DashboardPage() {
             justify-end"
             >
               <CalendarDateRangePicker />
-              <Button className="p-2 bg-green-400">
+              <Button className="p-2 bg-green-400 hover:bg-green-300">
                 <Download className="w-full h-full" />
               </Button>
             </div>
@@ -50,7 +50,8 @@ export default function DashboardPage() {
               <div className="grid gap-4 grid-cols-1 md:grid-cols-3 lg:grid-cols-7">
                 <Card className="col-span-4   w-full h-fit ">
                   <CardHeader>
-                    <CardTitle>Overview</CardTitle>
+                    <CardTitle>Engajamento</CardTitle>
+                    <CardDescription>Alcance de pessoas x Mês</CardDescription>
                   </CardHeader>
                   <CardContent className="pl-2 ">
                     <Overview />

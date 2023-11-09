@@ -28,6 +28,9 @@ export default function HandleKeyPressProvider({
           case 'c':
             router.push('/config')
             break
+          case '3':
+            router.push('/ranking')
+            break
           default:
         }
       }
