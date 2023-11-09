@@ -11,6 +11,7 @@ export default function HandleKeyPressProvider({
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
+      event.preventDefault()
       if (event.ctrlKey) {
         switch (event.key) {
           case 'i':
@@ -19,19 +20,14 @@ export default function HandleKeyPressProvider({
           case 'd':
             router.push('/dashboard')
             break
-          case 'c':
-            router.push('/config')
-            break
-          default:
-            break
-        }
-      } else if (event.altKey && event.ctrlKey) {
-        switch (event.key) {
-          case 'p':
+          case 'u':
             router.push('/profile')
             break
-          case 's':
+          case 'l':
             router.push('/sign-in')
+            break
+          case 'c':
+            router.push('/config')
             break
           default:
             break
