@@ -93,11 +93,8 @@ export function UserNav() {
               </Link>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={alterTheme}
-              className=" justify-between cursor-pointer"
-            >
-              <span>Alternar tema</span>
+            <DropdownMenuItem className=" justify-between cursor-pointer">
+              <span onClick={alterTheme}>Alternar tema</span>
               <ThemeSwitcher />
             </DropdownMenuItem>
 

@@ -8,12 +8,12 @@ const righteous = Righteous({
 export default function LogoAndNameHeader() {
   return (
     <>
-      <div className="flex space-x-5 w-1/3 items-center transition-all">
+      <div className="flex space-x-5 w-1/3 items-center ">
         <Image
           src="/image/logo.png"
           width="1080"
           height="1080"
-          className=" w-12 drop-shadow-sm animate__animated animate__bounceInDown  "
+          className=" w-12 drop-shadow-sm  "
           alt="Ir para Home"
         />
         <h4 className={`${righteous.className} text-sm`}>

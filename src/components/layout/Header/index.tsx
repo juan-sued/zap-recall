@@ -23,7 +23,7 @@ export default function Header() {
     <>
       <header
         className={cn(
-          'px-5 py-6 bg-pinkTheme-500 bg-opacity-70 fixed top-0 left-0 w-full z-10 flex backdrop-blur-md justify-between transition-all dark:bg-blueTheme-500 dark:bg-opacity-90 h-[96px] ',
+          'px-5 py-6 bg-pinkTheme-500 bg-opacity-70 fixed top-0 left-0 w-full z-10 flex justify-between backdrop-blur-md  transition-all dark:bg-blueTheme-500 dark:bg-opacity-90 h-[96px] animate__animated animate__fadeInDown ',
           scrollHeight > 1 ? 'drop-shadow-lg' : '',
         )}
       >

@@ -5,10 +5,10 @@ export const signInFormSchema = z.object({
 
   password: z
     .string()
-    .min(10, {
-      message: 'A descrição deve conter mais de 10 caracteres.',
+    .min(5, {
+      message: 'A senha deve conter mais de 4 caracteres.',
     })
-    .max(100, {
-      message: 'A descrição deve conter menos de 100 caracteres.',
+    .max(30, {
+      message: 'A senha deve conter menos de 30 caracteres.',
     }),
 })
