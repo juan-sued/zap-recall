@@ -1,21 +1,23 @@
 'use client'
 
-import { useState } from 'react'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import * as z from 'zod'
 import {
+  Form,
+  FormControl,
   FormField,
   FormItem,
-  FormControl,
   FormMessage,
-  Form,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { IZapBasic } from '@/interfaces/zapInterfaces'
+import { axiosQuizzes } from '@/services/axios'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { Search } from 'lucide-react'
-import CardZap from '../shared/Cards/CardZap'
-import zapMocks from '@/Mock/ZapMocks'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import * as z from 'zod'
 import AddZapButton from '../shared/Buttons/AddZapButton'
+import CardZap from '../shared/Cards/CardZap'
+import LoaderSpinner from '../shared/Loaders/LoaderSpinner/LoaderSpinner'
 
 export default function ListZaps() {
   const formSchema = z.object({
@@ -30,15 +32,20 @@ export default function ListZaps() {
 
   const [isHovered, setIsHovered] = useState(false)
 
-  const [listCardResponse, setListCardResponse] = useState()
+  const [listCardResponse, setListCardResponse] = useState<IZapBasic[]>([])
+  const [statePromise, setStatePromise] = useState<
+    'default' | 'error' | 'loading'
+  >('default')
   const handleSearch = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    setStatePromise('loading')
     const searchQuery = event.target.value
 
     try {
-      // const response = await axiosAdvicesLip.get(`/${searchQuery}`)
-      //    setListCardResponse(response.data)
-      //  console.log(response.data)
+      const response = await axiosQuizzes.get(`?title=${searchQuery}`)
+      setListCardResponse(response.data)
+      setStatePromise('default')
     } catch (error) {
+      setStatePromise('error')
       console.error('Erro ao buscar resultados:', error)
     }
   }
@@ -85,9 +92,31 @@ export default function ListZaps() {
             />
           </form>
         </Form>
+        <ListCardsZaps
+          listZaps={listCardResponse}
+          statePromise={statePromise}
+        />
+      </section>
+    </>
+  )
+}
+
+interface IListCards {
+  listZaps: IZapBasic[]
+  statePromise: 'default' | 'error' | 'loading'
+}
+
+function ListCardsZaps({ listZaps, statePromise }: IListCards) {
+  if (statePromise === 'loading') {
+    return <LoaderSpinner />
+  } else if (statePromise === 'error') {
+    return <>Deu erro</>
+  } else {
+    return (
+      <>
         <div className="listCardZaps  w-full h-full p-8 sm:p-20 ">
           <div className=" h-full grid grid-cols-1  gap-4  min-[890px]:grid-cols-2 min-[1270px]:grid-cols-3 min-[1580px]:grid-cols-4  place-items-center">
-            {zapMocks.ZAP_BASIC.map((zap, index) => {
+            {listZaps.map((zap, index) => {
               let bgColor = 'bg-black'
 
               switch (zap.difficulty) {
@@ -119,7 +148,7 @@ export default function ListZaps() {
             })}
           </div>
         </div>
-      </section>
-    </>
-  )
+      </>
+    )
+  }
 }
