@@ -10,13 +10,13 @@ import {
   CommandItem,
 } from '@/components/ui/command'
 import {
+  Form,
+  FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
-  FormControl,
-  FormDescription,
   FormMessage,
-  Form,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import {
@@ -26,13 +26,16 @@ import {
 } from '@/components/ui/popover'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Textarea } from '@/components/ui/textarea'
+import { useToast } from '@/components/ui/use-toast'
 import { cn } from '@/lib/utils'
+import { axiosQuizzes } from '@/services/axios'
+import { queryClient } from '@/services/queryClient'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useMutation } from '@tanstack/react-query'
 import { Check, CheckIcon, MoveVertical, Plus, Trash } from 'lucide-react'
 import Link from 'next/link'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import { zapFormSchema } from './schemas'
-import { useToast } from '@/components/ui/use-toast'
 import { ZapFormValues } from './types'
 
 const categories = [
@@ -85,6 +88,16 @@ export default function FormCreateZap() {
 
   const { toast } = useToast()
 
+  const createZap = async (data: ZapFormValues) => {
+    await axiosQuizzes.post('/', data)
+  }
+
+  const { mutate, error } = useMutation({
+    mutationFn: createZap,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['zaps'] })
+    },
+  })
   function onSubmit(data: ZapFormValues) {
     // validate categories
     if (data.category && data.newCategory) {
@@ -105,6 +118,8 @@ export default function FormCreateZap() {
 
       return
     }
+    mutate(data)
+
     toast({
       variant: 'sucess',
       title: 'Você enviou os seguintes valores:',
@@ -115,6 +130,8 @@ export default function FormCreateZap() {
       ),
     })
   }
+
+  if (error) console.log(error)
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">

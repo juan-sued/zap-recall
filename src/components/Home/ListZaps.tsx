@@ -11,10 +11,10 @@ import { Input } from '@/components/ui/input'
 import { IZapBasic } from '@/interfaces/zapInterfaces'
 import { axiosQuizzes } from '@/services/axios'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useQuery } from '@tanstack/react-query'
 import { Search } from 'lucide-react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useQuery } from 'react-query'
 import * as z from 'zod'
 import AddZapButton from '../shared/Buttons/AddZapButton'
 import { ListCardsZaps } from './ListCardZaps'
@@ -35,15 +35,16 @@ export default function ListZaps() {
     IZapBasic[] | undefined
   >(undefined)
 
-  const { data, isFetching, isError } = useQuery<IZapBasic[]>(
-    'zaps',
-    async () => {
-      const response = await axiosQuizzes.get('/')
+  const getZaps = async () => {
+    const response = await axiosQuizzes.get('/')
 
-      return response.data
-    },
-  )
+    return response.data
+  }
 
+  const { data, isFetching, isError } = useQuery<IZapBasic[]>({
+    queryKey: ['zaps'],
+    queryFn: getZaps,
+  })
   const handleSearch = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const searchQuery = event.target.value.toLowerCase()
 

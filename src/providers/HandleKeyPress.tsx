@@ -25,7 +25,7 @@ export default function HandleKeyPressProvider({
           case 'l':
             router.push('/sign-in')
             break
-          case 'c':
+          case 'ç':
             router.push('/config')
             break
           case '3':
