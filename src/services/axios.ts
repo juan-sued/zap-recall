@@ -1,10 +1,12 @@
 import axios from 'axios'
 
+const BASE_URL = 'http://localhost:4000'
+
 const axiosI = axios.create({
   baseURL: 'https://',
 })
-const axiosAdvicesLip = axios.create({
-  baseURL: 'https://api.adviceslip.com/advice/search/',
+const axiosQuizzes = axios.create({
+  baseURL: BASE_URL + '/quizzes',
 })
 
-export { axiosI, axiosAdvicesLip }
+export { axiosI, axiosQuizzes }
