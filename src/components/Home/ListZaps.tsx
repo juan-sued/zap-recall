@@ -8,7 +8,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { IZapBasic } from '@/interfaces/zapInterfaces'
+import { Difficulties, IZapBasic } from '@/interfaces/zapInterfaces'
 import { axiosQuizzes } from '@/services/axios'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Search } from 'lucide-react'
@@ -49,6 +49,7 @@ export default function ListZaps() {
       console.error('Erro ao buscar resultados:', error)
     }
   }
+  console.log(listCardResponse)
 
   return (
     <>
@@ -120,13 +121,13 @@ function ListCardsZaps({ listZaps, statePromise }: IListCards) {
               let bgColor = 'bg-black'
 
               switch (zap.difficulty) {
-                case 'easy':
+                case Difficulties.EASY:
                   bgColor = 'text-green-500'
                   break
-                case 'medium':
+                case Difficulties.MEDIUM:
                   bgColor = 'text-yellow-500'
                   break
-                case 'hard':
+                case Difficulties.HARD:
                   bgColor = 'text-red-500'
                   break
               }

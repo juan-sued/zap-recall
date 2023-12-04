@@ -1,4 +1,4 @@
-import { IZapBasic } from '@/interfaces/zapInterfaces'
+import { Difficulties, IZapBasic } from '@/interfaces/zapInterfaces'
 
 const ZAP_BASIC: IZapBasic[] = [
   {
@@ -6,7 +6,7 @@ const ZAP_BASIC: IZapBasic[] = [
     title: 'Ciclo Celular e Divisão Celular',
     description:
       'Este questionário explora os diferentes estágios do ciclo celular e o processo de divisão celular.',
-    difficulty: 'easy',
+    difficulty: Difficulties.EASY,
     percentEndings: 90,
     attempts: 25,
     creatAt: '10/10/2023',
@@ -18,7 +18,7 @@ const ZAP_BASIC: IZapBasic[] = [
     title: 'Genética Mendeliana',
     description:
       'Analise os princípios básicos da genética descobertos por Gregor Mendel e como eles se aplicam a diferentes organismos.',
-    difficulty: 'medium',
+    difficulty: Difficulties.MEDIUM,
     percentEndings: 60,
     attempts: 50,
     creatAt: '15/09/2023',
@@ -30,7 +30,7 @@ const ZAP_BASIC: IZapBasic[] = [
     title: 'Fisiologia Humana: Sistema Cardiovascular',
     description:
       'Explore o funcionamento do sistema circulatório humano, incluindo o coração, vasos sanguíneos e circulação sanguínea.',
-    difficulty: 'hard',
+    difficulty: Difficulties.HARD,
     percentEndings: 30,
     attempts: 100,
     creatAt: '20/08/2023',
@@ -42,7 +42,7 @@ const ZAP_BASIC: IZapBasic[] = [
     title: 'Ecossistemas Aquáticos',
     description:
       'Estude os diferentes tipos de ecossistemas aquáticos, incluindo oceanos, rios, lagos e pântanos.',
-    difficulty: 'medium',
+    difficulty: Difficulties.MEDIUM,
     percentEndings: 70,
     attempts: 40,
     creatAt: '05/11/2023',
@@ -54,7 +54,7 @@ const ZAP_BASIC: IZapBasic[] = [
     title: 'Metabolismo Celular',
     description:
       'Aprofunde-se no processo de metabolismo celular, incluindo catabolismo e anabolismo de diferentes nutrientes.',
-    difficulty: 'hard',
+    difficulty: Difficulties.HARD,
     percentEndings: 20,
     attempts: 80,
     creatAt: '08/11/2023',
@@ -66,7 +66,7 @@ const ZAP_BASIC: IZapBasic[] = [
     title: 'Genética Molecular',
     description:
       'Estude os aspectos moleculares da genética, incluindo estrutura do DNA, replicação e expressão gênica.',
-    difficulty: 'medium',
+    difficulty: Difficulties.MEDIUM,
     percentEndings: 50,
     attempts: 60,
     creatAt: '12/11/2023',
@@ -78,7 +78,7 @@ const ZAP_BASIC: IZapBasic[] = [
     title: 'Sistema Nervoso: Anatomia e Fisiologia',
     description:
       'Conheça a anatomia e fisiologia do sistema nervoso, incluindo o cérebro, medula espinhal e nervos periféricos.',
-    difficulty: 'hard',
+    difficulty: Difficulties.HARD,
     percentEndings: 30,
     attempts: 100,
     creatAt: '18/11/2023',
@@ -90,7 +90,7 @@ const ZAP_BASIC: IZapBasic[] = [
     title: 'Evolução das Espécies',
     description:
       'Explore os mecanismos e evidências da evolução biológica e a diversidade de vida na Terra.',
-    difficulty: 'easy',
+    difficulty: Difficulties.EASY,
     percentEndings: 90,
     attempts: 20,
     creatAt: '22/11/2023',
@@ -102,7 +102,7 @@ const ZAP_BASIC: IZapBasic[] = [
     title: 'Microbiologia Básica',
     description:
       'Estude os microrganismos, incluindo bactérias, vírus e fungos, e seu papel em diferentes ambientes e processos biológicos.',
-    difficulty: 'medium',
+    difficulty: Difficulties.MEDIUM,
     percentEndings: 70,
     attempts: 35,
     creatAt: '30/11/2023',
@@ -114,7 +114,7 @@ const ZAP_BASIC: IZapBasic[] = [
     title: 'Imunologia: Sistema Imune',
     description:
       'Aprofunde-se no sistema imunológico, incluindo células imunes, resposta imune e imunização.',
-    difficulty: 'hard',
+    difficulty: Difficulties.HARD,
     percentEndings: 40,
     attempts: 90,
     creatAt: '05/12/2023',
