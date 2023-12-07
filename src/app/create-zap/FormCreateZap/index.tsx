@@ -30,8 +30,9 @@ import { useToast } from '@/components/ui/use-toast'
 import { ICategory } from '@/interfaces/categories'
 import { cn } from '@/lib/utils'
 import { axiosQuizzes } from '@/services/axios'
+import { getCategories } from '@/services/categories'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Check, CheckIcon, MoveVertical, Plus, Trash } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -57,9 +58,10 @@ export default function FormCreateZap() {
 
   const queryClient = useQueryClient()
 
-  const categories: ICategory[] | undefined = queryClient.getQueryData([
-    'categories',
-  ])
+  const categoriesQuery = useQuery<ICategory[]>({
+    queryKey: ['categories'],
+    queryFn: getCategories,
+  })
 
   const form = useForm<ZapFormValues>({
     resolver: zodResolver(zapFormSchema),
@@ -77,11 +79,24 @@ export default function FormCreateZap() {
   const createZap = async (data: ZapFormValues) => {
     await axiosQuizzes.post('/', data)
   }
-
-  const { mutate, error } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: createZap,
+    onError: () => {
+      toast({
+        variant: 'destructive',
+        title: 'Opss! Não foi possível criar o zap.',
+      })
+    },
     onSuccess: () => {
+      toast({
+        variant: 'sucess',
+        title: 'Zap criado com sucesso!',
+      })
       queryClient.invalidateQueries({ queryKey: ['zaps'] })
+
+      queryClient.invalidateQueries({ queryKey: ['categories'] })
+
+      router.push('/')
     },
   })
   function onSubmit(data: ZapFormValues) {
@@ -106,16 +121,10 @@ export default function FormCreateZap() {
       return
     }
 
-    const dataWithDifficulty = { ...data, difficulty: 'HARD' }
+    const dataWithDifficulty = { ...data, difficulty: 'EASY' }
     mutate(dataWithDifficulty)
-    toast({
-      variant: 'sucess',
-      title: 'Zap criado com sucesso!',
-    })
-    router.push('/')
   }
 
-  if (error) console.log(error)
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -177,7 +186,7 @@ export default function FormCreateZap() {
                         )}
                       >
                         {field.value
-                          ? categories?.find(
+                          ? categoriesQuery.data?.find(
                               (category) => category.id === Number(field.value),
                             )?.title
                           : 'Selecionar categoria'}
@@ -192,7 +201,7 @@ export default function FormCreateZap() {
 
                       <CommandGroup>
                         <ScrollArea className="h-60 ">
-                          {categories?.map((category) => (
+                          {categoriesQuery.data?.map((category) => (
                             <CommandItem
                               value={category.title}
                               key={category.id}
