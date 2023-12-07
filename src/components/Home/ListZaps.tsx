@@ -8,49 +8,63 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Difficulties, IZapBasic } from '@/interfaces/zapInterfaces'
-import { axiosQuizzes } from '@/services/axios'
+import { IZapBasic } from '@/interfaces/zapInterfaces'
+import { axiosCategories, axiosQuizzes } from '@/services/axios'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useQuery } from '@tanstack/react-query'
 import { Search } from 'lucide-react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 import AddZapButton from '../shared/Buttons/AddZapButton'
-import CardZap from '../shared/Cards/CardZap'
-import LoaderSpinner from '../shared/Loaders/LoaderSpinner/LoaderSpinner'
+import { ListCardsZaps } from './ListCardZaps'
 
 export default function ListZaps() {
+  const [isHovered, setIsHovered] = useState(false)
+
+  const getCategories = async () => {
+    const response = await axiosCategories.get('/')
+
+    return response.data
+  }
+
+  const categoriesQuery = useQuery<IZapBasic[]>({
+    queryKey: ['categories'],
+    queryFn: getCategories,
+  })
+
+  const getZaps = async () => {
+    const response = await axiosQuizzes.get('/')
+    return response.data
+  }
+
+  const { data, isFetching, isError } = useQuery<IZapBasic[]>({
+    queryKey: ['zaps'],
+    queryFn: getZaps,
+  })
+
+  const [filteredListSearch, setFilteredListSearch] = useState<
+    IZapBasic[] | undefined
+  >(undefined)
+
+  const handleSearch = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const searchQuery = event.target.value.toLowerCase()
+
+    const filteredZaps = data?.filter((zap) =>
+      zap.title.toLowerCase().includes(searchQuery),
+    )
+
+    if (filteredZaps) setFilteredListSearch(filteredZaps)
+  }
+
   const formSchema = z.object({
     search: z.string().min(2, {
       message: 'É necessário mais de dois caracteres',
     }),
   })
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   })
-
-  const [isHovered, setIsHovered] = useState(false)
-
-  const [listCardResponse, setListCardResponse] = useState<IZapBasic[]>([])
-  const [statePromise, setStatePromise] = useState<
-    'default' | 'error' | 'loading'
-  >('default')
-  const handleSearch = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    setStatePromise('loading')
-    const searchQuery = event.target.value
-
-    try {
-      const response = await axiosQuizzes.get(`?title=${searchQuery}`)
-      setListCardResponse(response.data)
-      setStatePromise('default')
-    } catch (error) {
-      setStatePromise('error')
-      console.error('Erro ao buscar resultados:', error)
-    }
-  }
-  console.log(listCardResponse)
-
   return (
     <>
       <section className="searchZaps w-full flex flex-col space-y-8 items-center justify-center mt-10">
@@ -94,62 +108,11 @@ export default function ListZaps() {
           </form>
         </Form>
         <ListCardsZaps
-          listZaps={listCardResponse}
-          statePromise={statePromise}
+          listZaps={data && !filteredListSearch ? data : filteredListSearch}
+          isFetching={isFetching}
+          isError={isError}
         />
       </section>
     </>
   )
-}
-
-interface IListCards {
-  listZaps: IZapBasic[]
-  statePromise: 'default' | 'error' | 'loading'
-}
-
-function ListCardsZaps({ listZaps, statePromise }: IListCards) {
-  if (statePromise === 'loading') {
-    return <LoaderSpinner />
-  } else if (statePromise === 'error') {
-    return <>Deu erro</>
-  } else {
-    return (
-      <>
-        <div className="listCardZaps  w-full h-full p-8 sm:p-20 ">
-          <div className=" h-full grid grid-cols-1  gap-4  min-[890px]:grid-cols-2 min-[1270px]:grid-cols-3 min-[1580px]:grid-cols-4  place-items-center">
-            {listZaps.map((zap, index) => {
-              let bgColor = 'bg-black'
-
-              switch (zap.difficulty) {
-                case Difficulties.EASY:
-                  bgColor = 'text-green-500'
-                  break
-                case Difficulties.MEDIUM:
-                  bgColor = 'text-yellow-500'
-                  break
-                case Difficulties.HARD:
-                  bgColor = 'text-red-500'
-                  break
-              }
-
-              return (
-                <CardZap
-                  key={index}
-                  id={zap.id}
-                  title={zap.title}
-                  category={zap.category}
-                  description={zap.description}
-                  percentEndings={zap.percentEndings}
-                  updatedAt={zap.updatedAt}
-                  creatAt={zap.creatAt}
-                  attempts={zap.attempts}
-                  className={bgColor}
-                />
-              )
-            })}
-          </div>
-        </div>
-      </>
-    )
-  }
 }

@@ -10,13 +10,13 @@ import {
   CommandItem,
 } from '@/components/ui/command'
 import {
+  Form,
+  FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
-  FormControl,
-  FormDescription,
   FormMessage,
-  Form,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import {
@@ -26,42 +26,23 @@ import {
 } from '@/components/ui/popover'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Textarea } from '@/components/ui/textarea'
+import { useToast } from '@/components/ui/use-toast'
+import { ICategory } from '@/interfaces/categories'
 import { cn } from '@/lib/utils'
+import { axiosQuizzes } from '@/services/axios'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Check, CheckIcon, MoveVertical, Plus, Trash } from 'lucide-react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import { zapFormSchema } from './schemas'
-import { useToast } from '@/components/ui/use-toast'
 import { ZapFormValues } from './types'
-
-const categories = [
-  { label: 'Nenhum', value: '' },
-  { label: 'Matemática', value: 'matematica' },
-  { label: 'Português', value: 'portugues' },
-  { label: 'História', value: 'historia' },
-  { label: 'Geografia', value: 'geografia' },
-  { label: 'Ciências', value: 'ciencias' },
-  { label: 'Inglês', value: 'ingles' },
-  { label: 'Educação Física', value: 'educacao_fisica' },
-  { label: 'Artes', value: 'artes' },
-  { label: 'Biologia', value: 'biologia' },
-  { label: 'Física', value: 'fisica' },
-  { label: 'Química', value: 'quimica' },
-  { label: 'Filosofia', value: 'filosofia' },
-  { label: 'Sociologia', value: 'sociologia' },
-  { label: 'Espanhol', value: 'espanhol' },
-  { label: 'Francês', value: 'frances' },
-  { label: 'Alemão', value: 'alemao' },
-  { label: 'Italiano', value: 'italiano' },
-  { label: 'Música', value: 'musica' },
-  { label: 'Teatro', value: 'teatro' },
-] as const
 
 const defaultValues: Partial<ZapFormValues> = {
   title: '',
   description: '',
-  category: '',
+  categoryId: null,
   newCategory: '',
   questions: [
     {
@@ -72,6 +53,14 @@ const defaultValues: Partial<ZapFormValues> = {
 }
 
 export default function FormCreateZap() {
+  const router = useRouter()
+
+  const queryClient = useQueryClient()
+
+  const categories: ICategory[] | undefined = queryClient.getQueryData([
+    'categories',
+  ])
+
   const form = useForm<ZapFormValues>({
     resolver: zodResolver(zapFormSchema),
     defaultValues,
@@ -85,14 +74,25 @@ export default function FormCreateZap() {
 
   const { toast } = useToast()
 
+  const createZap = async (data: ZapFormValues) => {
+    await axiosQuizzes.post('/', data)
+  }
+
+  const { mutate, error } = useMutation({
+    mutationFn: createZap,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['zaps'] })
+    },
+  })
   function onSubmit(data: ZapFormValues) {
     // validate categories
-    if (data.category && data.newCategory) {
-      form.setError('category', {
+    if (data.categoryId && data.newCategory) {
+      form.setError('categoryId', {
         message: 'Escolha apenas uma.',
       })
-    } else if (data.category === '' && data.newCategory === '') {
-      form.setError('category', {
+      return
+    } else if (data.categoryId === null && data.newCategory === '') {
+      form.setError('categoryId', {
         message: 'Não é possível criar sem uma categoria.',
       })
 
@@ -105,16 +105,17 @@ export default function FormCreateZap() {
 
       return
     }
+
+    const dataWithDifficulty = { ...data, difficulty: 'HARD' }
+    mutate(dataWithDifficulty)
     toast({
       variant: 'sucess',
-      title: 'Você enviou os seguintes valores:',
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
+      title: 'Zap criado com sucesso!',
     })
+    router.push('/')
   }
+
+  if (error) console.log(error)
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -159,7 +160,7 @@ export default function FormCreateZap() {
         <section className="sectionCategory flex flex-col  gap-10 justify-between items-start sm:flex-row ">
           <FormField
             control={form.control}
-            name="category"
+            name="categoryId"
             render={({ field }) => (
               <FormItem className="flex flex-col w-80">
                 <FormLabel className="leading-5">Categoria</FormLabel>
@@ -176,9 +177,9 @@ export default function FormCreateZap() {
                         )}
                       >
                         {field.value
-                          ? categories.find(
-                              (category) => category.value === field.value,
-                            )?.label
+                          ? categories?.find(
+                              (category) => category.id === Number(field.value),
+                            )?.title
                           : 'Selecionar categoria'}
                         <MoveVertical className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                       </Button>
@@ -191,24 +192,24 @@ export default function FormCreateZap() {
 
                       <CommandGroup>
                         <ScrollArea className="h-60 ">
-                          {categories.map((category) => (
+                          {categories?.map((category) => (
                             <CommandItem
-                              value={category.label}
-                              key={category.value}
+                              value={category.title}
+                              key={category.id}
                               className="cursor-pointer"
                               onSelect={() => {
-                                form.setValue('category', category.value)
+                                form.setValue('categoryId', category.id)
                               }}
                             >
                               <CheckIcon
                                 className={cn(
                                   'mr-2 h-4 w-4',
-                                  category.value === field.value
+                                  category.id === field.value
                                     ? 'opacity-100'
                                     : 'opacity-0',
                                 )}
                               />
-                              {category.label}
+                              {category.title}
                             </CommandItem>
                           ))}
                         </ScrollArea>
