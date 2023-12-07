@@ -1,12 +1,12 @@
-import './globals.css'
+import Header from '@/components/layout/Header'
+import { Toaster } from '@/components/ui/toaster'
+import { siteConfig } from '@/config/site'
+import 'animate.css'
 import type { Metadata } from 'next'
 import { Recursive } from 'next/font/google'
-import 'animate.css'
 import { ReactNode } from 'react'
 import Providers from '../providers/Index'
-import Header from '@/components/layout/Header'
-import { siteConfig } from '@/config/site'
-import { Toaster } from '@/components/ui/toaster'
+import './globals.css'
 
 const poppins = Recursive({
   subsets: ['latin'],
