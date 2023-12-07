@@ -6,4 +6,8 @@ const axiosQuizzes = axios.create({
   baseURL: BASE_URL + '/quizzes',
 })
 
-export { axiosQuizzes }
+const axiosCategories = axios.create({
+  baseURL: BASE_URL + '/categories',
+})
+
+export { axiosCategories, axiosQuizzes }

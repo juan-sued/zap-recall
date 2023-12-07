@@ -19,7 +19,7 @@ export const zapFormSchema = z.object({
       message: 'A descrição deve conter menos de 100 caracteres.',
     }),
 
-  category: z.string().optional(),
+  categoryId: z.number().optional().nullable(),
   newCategory: z
     .string()
     .max(30, {

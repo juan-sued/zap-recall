@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { IZapBasic } from '@/interfaces/zapInterfaces'
-import { axiosQuizzes } from '@/services/axios'
+import { axiosCategories, axiosQuizzes } from '@/services/axios'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useQuery } from '@tanstack/react-query'
 import { Search } from 'lucide-react'
@@ -20,24 +20,21 @@ import AddZapButton from '../shared/Buttons/AddZapButton'
 import { ListCardsZaps } from './ListCardZaps'
 
 export default function ListZaps() {
-  const formSchema = z.object({
-    search: z.string().min(2, {
-      message: 'É necessário mais de dois caracteres',
-    }),
-  })
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-  })
-
   const [isHovered, setIsHovered] = useState(false)
 
-  const [filteredListSearch, setFilteredListSearch] = useState<
-    IZapBasic[] | undefined
-  >(undefined)
+  const getCategories = async () => {
+    const response = await axiosCategories.get('/')
+
+    return response.data
+  }
+
+  const categoriesQuery = useQuery<IZapBasic[]>({
+    queryKey: ['categories'],
+    queryFn: getCategories,
+  })
 
   const getZaps = async () => {
     const response = await axiosQuizzes.get('/')
-
     return response.data
   }
 
@@ -45,6 +42,11 @@ export default function ListZaps() {
     queryKey: ['zaps'],
     queryFn: getZaps,
   })
+
+  const [filteredListSearch, setFilteredListSearch] = useState<
+    IZapBasic[] | undefined
+  >(undefined)
+
   const handleSearch = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const searchQuery = event.target.value.toLowerCase()
 
@@ -54,6 +56,15 @@ export default function ListZaps() {
 
     if (filteredZaps) setFilteredListSearch(filteredZaps)
   }
+
+  const formSchema = z.object({
+    search: z.string().min(2, {
+      message: 'É necessário mais de dois caracteres',
+    }),
+  })
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+  })
   return (
     <>
       <section className="searchZaps w-full flex flex-col space-y-8 items-center justify-center mt-10">
