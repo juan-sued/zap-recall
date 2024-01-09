@@ -11,7 +11,7 @@ import { Input } from '@/components/ui/input'
 import { ICategory } from '@/interfaces/categories'
 import { IZapBasic } from '@/interfaces/zapInterfaces'
 import { getCategories } from '@/services/categories'
-import { getZaps } from '@/services/zaps'
+import zapsQuery, { getZaps } from '@/services/zaps'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useQuery } from '@tanstack/react-query'
 import { Search } from 'lucide-react'
@@ -31,7 +31,7 @@ export default function ListZaps() {
 
   const { data, isFetching, isError } = useQuery<IZapBasic[]>({
     queryKey: ['zaps'],
-    queryFn: getZaps,
+    queryFn: zapsQuery.getZaps,
   })
 
   const [filteredListSearch, setFilteredListSearch] = useState<

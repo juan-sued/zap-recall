@@ -28,9 +28,9 @@ export default function PageBasicTemplate({
   className,
 }: IPageBasicTemplate) {
   return (
-    <Main className="animate__animated animate__fadeIn">
-      <section className="titleCreateZap ">
-        <h1 className="drop-shadow text-5xl">{titlePage}</h1>
+    <Main className="animate__animated animate__fadeIn space-y-9">
+      <section className="titleCreateZap">
+        <h1 className="drop-shadow text-2xl sm:text-5xl ">{titlePage}</h1>
       </section>
       <section className="sectionFormCreateZap h-full w-full p-5 flex justify-center">
         <Card
