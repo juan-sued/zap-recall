@@ -10,21 +10,23 @@ import {
 import { cn } from '@/lib/utils'
 import { ReactNode } from 'react'
 
-interface IFormBasicTemplate {
+interface IPageBasicTemplate {
   children: ReactNode
   titlePage: string
-  cardTitle: string
-  cardDescription: string
+  cardTitle?: string
+  cardDescription?: string
+  cardFooter?: string
   className?: string
 }
 
-export default function FormBasicTemplate({
+export default function PageBasicTemplate({
   children,
   titlePage,
   cardTitle,
   cardDescription,
+  cardFooter,
   className,
-}: IFormBasicTemplate) {
+}: IPageBasicTemplate) {
   return (
     <Main className="animate__animated animate__fadeIn">
       <section className="titleCreateZap ">
@@ -38,8 +40,12 @@ export default function FormBasicTemplate({
           )}
         >
           <CardHeader>
-            <CardTitle>{cardTitle}</CardTitle>
-            <CardDescription>{cardDescription}</CardDescription>
+            <CardTitle className="text-slate-800 dark:text-slate-200 ">
+              {cardTitle}
+            </CardTitle>
+            <CardDescription className="text-md">
+              {cardDescription}
+            </CardDescription>
           </CardHeader>
           <CardContent>{children}</CardContent>
           <CardFooter className="text-muted-foreground  justify-center">

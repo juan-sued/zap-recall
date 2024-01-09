@@ -31,7 +31,7 @@ export function UserNav() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button className="  bg-transparent  hover:bg-transparent dark:bg-transparent  rounded-full  w-12 h-12">
-              <Avatar className="h-12 w-12 drop-shadow-lg shadow-black">
+              <Avatar className="h-12 w-12 ">
                 <AvatarImage
                   src="https://avatars.githubusercontent.com/u/92616927?v=4"
                   alt="Avatar Image"

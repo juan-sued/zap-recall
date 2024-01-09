@@ -10,6 +10,7 @@ import { Separator } from '@/components/ui/separator'
 import { IZapBasic } from '@/interfaces/zapInterfaces'
 
 import { cn } from '@/lib/utils'
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 interface CardZap extends Omit<IZapBasic, 'difficulty'> {
@@ -27,11 +28,17 @@ export default function CardZap({
   className,
   ...props
 }: CardZap) {
+  const router = useRouter()
+
   const [isMore624px, setIsMore624px] = useState(false)
 
   useEffect(() => {
     setIsMore624px(window.innerWidth > 640)
   }, [])
+
+  function goToZapView(id: number) {
+    router.push(`/zap-view/${id}`)
+  }
 
   return (
     <Card
@@ -40,6 +47,7 @@ export default function CardZap({
         className,
       )}
       {...props}
+      onClick={() => goToZapView(id)}
     >
       <CardHeader>
         <CardTitle>{title}</CardTitle>
