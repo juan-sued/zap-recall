@@ -3,6 +3,8 @@ import { ReactNode, createContext, useState } from 'react'
 import { setCookie } from 'nookies'
 import { IUser } from '@/interfaces/userInterfaces'
 import { useRouter } from 'next/navigation'
+import { useMutation } from '@tanstack/react-query'
+import { toast } from '@/components/ui/use-toast'
 
 type SignInData = {
   email: string
@@ -22,16 +24,31 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const [user, setUser] = useState<IUser | null>(null)
   const isAuthenticated = !!user
+
+  const signInMutation = useMutation({
+    mutationFn: authQuery.signIn,
+    onError: () => {
+      toast({
+        variant: 'destructive',
+        title: 'Opss! Não foi possível logar',
+      })
+    },
+    onSuccess: (data) => {
+      setCookie(undefined, 'next-auth-token', data.token, {
+        maxAge: 60 * 60 * 100, // 100h
+      })
+      setUser(data.user)
+
+      toast({
+        variant: 'sucess',
+        title: 'Login realizado!',
+      })
+
+      router.push('/')
+    },
+  })
   async function signIn({ email, password }: SignInData) {
-    const { token, user } = await authQuery.signIn({ email, password })
-
-    setCookie(undefined, 'next-auth-token', token, {
-      maxAge: 60 * 60 * 100, // 100h
-    })
-
-    setUser(user)
-
-    router.push('/')
+    signInMutation.mutate({ email, password })
   }
 
   return (

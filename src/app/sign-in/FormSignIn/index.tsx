@@ -19,9 +19,11 @@ import { signInFormSchema } from './schemas'
 import { useToast } from '@/components/ui/use-toast'
 import { SignInFormValues } from './types'
 import Link from 'next/link'
-import { useMutation } from '@tanstack/react-query'
-import authQuery from '@/services/auth'
+
 import { useRouter } from 'next/navigation'
+
+import { useContext } from 'react'
+import { AuthContext } from '@/providers/AuthContext'
 
 const defaultValues: Partial<SignInFormValues> = {
   email: '',
@@ -29,34 +31,15 @@ const defaultValues: Partial<SignInFormValues> = {
 }
 
 export default function FormSignIn() {
-  const router = useRouter()
-  const { toast } = useToast()
-
+  const { signIn } = useContext(AuthContext)
   const form = useForm<SignInFormValues>({
     resolver: zodResolver(signInFormSchema),
     defaultValues,
     mode: 'onChange',
   })
 
-  const { mutate } = useMutation({
-    mutationFn: authQuery.signIn,
-    onError: () => {
-      toast({
-        variant: 'destructive',
-        title: 'Opss! Não foi possível logar',
-      })
-    },
-    onSuccess: () => {
-      toast({
-        variant: 'sucess',
-        title: 'Login realizado!',
-      })
-
-      router.push('/')
-    },
-  })
-  function onSubmit(data: SignInFormValues) {
-    mutate(data)
+  async function onSubmit(data: SignInFormValues) {
+    await signIn(data)
   }
 
   return (

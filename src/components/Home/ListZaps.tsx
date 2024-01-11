@@ -81,9 +81,10 @@ export default function ListZaps() {
                       </div>
 
                       <Input
+                        type="text"
                         placeholder={'Buscar Zaps'}
                         {...field}
-                        className={`w-1 pl-7 overflow-hidden rounded-full text-white placeholder:text-white shadow-lg shadow-red-900 border-none hover:w-80 hover:shadow-inner transition-all hover:duration-1000 active:w-80  bg-red-500 dark:bg-slate-900  dark:shadow-slate-950  hover:pl-10 ${
+                        className={`w-1 pl-7 overflow-hidden rounded-full text-white placeholder:text-white shadow-lg shadow-red-900 border-none hover:w-80 hover:shadow-inner transition-all hover:duration-1000 active:w-80  bg-red-500  dark:bg-slate-900  dark:shadow-slate-950  hover:pl-10 ${
                           isHovered
                             ? 'duration-1000 w-80 pl-10 shadow-inner'
                             : ''
