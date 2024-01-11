@@ -16,11 +16,14 @@ import { Input } from '@/components/ui/input'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { useToast } from '@/components/ui/use-toast'
-import { ZapFormValues } from './types'
+import { SignUpFormValues } from './types'
 import Link from 'next/link'
 import { signUpFormSchema } from './schemas'
+import { useMutation } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
+import authQuery from '@/services/auth'
 
-const defaultValues: Partial<ZapFormValues> = {
+const defaultValues: Partial<SignUpFormValues> = {
   name: '',
   email: '',
   password: '',
@@ -29,23 +32,33 @@ const defaultValues: Partial<ZapFormValues> = {
 
 export default function FormSignUp() {
   const { toast } = useToast()
+  const router = useRouter()
 
-  const form = useForm<ZapFormValues>({
+  const { mutate } = useMutation({
+    mutationFn: authQuery.signUp,
+    onError: () => {
+      toast({
+        variant: 'destructive',
+        title: 'Opss! Não foi possível cadastrar!',
+      })
+    },
+    onSuccess: () => {
+      toast({
+        variant: 'sucess',
+        title: 'Cadastrado com sucesso!',
+      })
+
+      router.push('/')
+    },
+  })
+  const form = useForm<SignUpFormValues>({
     resolver: zodResolver(signUpFormSchema),
     defaultValues,
     mode: 'onChange',
   })
 
-  function onSubmit(data: ZapFormValues) {
-    toast({
-      variant: 'sucess',
-      title: 'Você enviou os seguintes valores:',
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    })
+  function onSubmit(data: SignUpFormValues) {
+    mutate(data)
   }
 
   return (

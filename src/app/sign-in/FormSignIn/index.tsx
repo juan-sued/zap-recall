@@ -14,37 +14,49 @@ import {
 import { Input } from '@/components/ui/input'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Check } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { signInFormSchema } from './schemas'
 import { useToast } from '@/components/ui/use-toast'
-import { ZapFormValues } from './types'
+import { SignInFormValues } from './types'
 import Link from 'next/link'
+import { useMutation } from '@tanstack/react-query'
+import authQuery from '@/services/auth'
+import { useRouter } from 'next/navigation'
 
-const defaultValues: Partial<ZapFormValues> = {
+const defaultValues: Partial<SignInFormValues> = {
   email: '',
   password: '',
 }
 
 export default function FormSignIn() {
+  const router = useRouter()
   const { toast } = useToast()
 
-  const form = useForm<ZapFormValues>({
+  const form = useForm<SignInFormValues>({
     resolver: zodResolver(signInFormSchema),
     defaultValues,
     mode: 'onChange',
   })
 
-  function onSubmit(data: ZapFormValues) {
-    toast({
-      variant: 'sucess',
-      title: 'Você enviou os seguintes valores:',
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    })
+  const { mutate } = useMutation({
+    mutationFn: authQuery.signIn,
+    onError: () => {
+      toast({
+        variant: 'destructive',
+        title: 'Opss! Não foi possível logar',
+      })
+    },
+    onSuccess: () => {
+      toast({
+        variant: 'sucess',
+        title: 'Login realizado!',
+      })
+
+      router.push('/')
+    },
+  })
+  function onSubmit(data: SignInFormValues) {
+    mutate(data)
   }
 
   return (

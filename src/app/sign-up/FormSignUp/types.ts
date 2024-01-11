@@ -1,4 +1,4 @@
 import { z } from 'zod'
 import { signUpFormSchema } from './schemas'
 
-export type ZapFormValues = z.infer<typeof signUpFormSchema>
+export type SignUpFormValues = z.infer<typeof signUpFormSchema>

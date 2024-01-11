@@ -12,11 +12,12 @@ import { ReactNode } from 'react'
 
 interface IPageBasicTemplate {
   children: ReactNode
-  titlePage: string
+  titlePage?: string
   cardTitle?: string
   cardDescription?: string
   cardFooter?: string
   className?: string
+  haveMotivations?: boolean
 }
 
 export default function PageBasicTemplate({
@@ -26,6 +27,7 @@ export default function PageBasicTemplate({
   cardDescription,
   cardFooter,
   className,
+  haveMotivations = true,
 }: IPageBasicTemplate) {
   return (
     <Main className="animate__animated animate__fadeIn space-y-9">
@@ -48,11 +50,16 @@ export default function PageBasicTemplate({
             </CardDescription>
           </CardHeader>
           <CardContent>{children}</CardContent>
-          <CardFooter className="text-muted-foreground  justify-center">
-            &quot;O aprendizado é a única coisa que a mente nunca se cansa,
-            nunca tem medo e nunca se arrepende&#46;&quot;
-            <br /> &#45; Leonardo da Vinci
-          </CardFooter>
+
+          {haveMotivations ? (
+            <CardFooter className="text-muted-foreground  justify-center">
+              &quot;O aprendizado é a única coisa que a mente nunca se cansa,
+              nunca tem medo e nunca se arrepende&#46;&quot;
+              <br /> &#45; Leonardo da Vinci
+            </CardFooter>
+          ) : (
+            ''
+          )}
         </Card>
       </section>
       <div id="down-page" className="anchor"></div>

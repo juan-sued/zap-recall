@@ -39,7 +39,6 @@ import { useRouter } from 'next/navigation'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import { zapFormSchema } from './schemas'
 import { ZapFormValues } from './types'
-
 const defaultValues: Partial<ZapFormValues> = {
   title: '',
   description: '',
@@ -79,6 +78,7 @@ export default function FormCreateZap() {
   const createZap = async (data: ZapFormValues) => {
     await axiosQuizzes.post('/', data)
   }
+
   const { mutate } = useMutation({
     mutationFn: createZap,
     onError: () => {
@@ -95,7 +95,6 @@ export default function FormCreateZap() {
       queryClient.invalidateQueries({ queryKey: ['zaps'] })
 
       queryClient.invalidateQueries({ queryKey: ['categories'] })
-
       router.push('/')
     },
   })
