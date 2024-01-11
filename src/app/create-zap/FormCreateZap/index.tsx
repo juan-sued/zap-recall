@@ -29,7 +29,6 @@ import { Textarea } from '@/components/ui/textarea'
 import { useToast } from '@/components/ui/use-toast'
 import { ICategory } from '@/interfaces/categories'
 import { cn } from '@/lib/utils'
-import { axiosQuizzes } from '@/services/axios'
 import { getCategories } from '@/services/categories'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
@@ -39,6 +38,7 @@ import { useRouter } from 'next/navigation'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import { zapFormSchema } from './schemas'
 import { ZapFormValues } from './types'
+import { createZap } from '@/services/zaps'
 const defaultValues: Partial<ZapFormValues> = {
   title: '',
   description: '',
@@ -74,10 +74,6 @@ export default function FormCreateZap() {
   })
 
   const { toast } = useToast()
-
-  const createZap = async (data: ZapFormValues) => {
-    await axiosQuizzes.post('/', data)
-  }
 
   const { mutate } = useMutation({
     mutationFn: createZap,

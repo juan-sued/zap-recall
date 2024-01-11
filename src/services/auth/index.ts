@@ -1,15 +1,22 @@
 import { SignInFormValues } from '@/app/sign-in/FormSignIn/types'
-import { axiosAuth } from '../axios'
+import { zapApiAxios } from '../axios'
 import { SignUpFormValues } from '@/app/sign-up/FormSignUp/types'
+import { IUser } from '@/interfaces/userInterfaces'
+import { ISignInResponse } from '@/interfaces/authInterfaces'
 
-async function signIn(data: SignInFormValues) {
-  const response = await axiosAuth.post('/sign-in', data)
+async function signIn(data: SignInFormValues): Promise<ISignInResponse> {
+  const response = await zapApiAxios.post('auth/sign-in', data)
 
   return response.data
 }
 
-async function signUp(data: SignUpFormValues) {
-  const response = await axiosAuth.post('/sign-up', data)
+async function recoverUserInformation(): Promise<IUser> {
+  const response = await zapApiAxios.get('auth/recover-user-information')
+  return response.data
+}
+
+async function signUp(data: SignUpFormValues): Promise<void> {
+  const response = await zapApiAxios.post('auth/sign-up', data)
 
   return response.data
 }
@@ -17,6 +24,7 @@ async function signUp(data: SignUpFormValues) {
 const authQuery = {
   signIn,
   signUp,
+  recoverUserInformation,
 }
 
 export default authQuery

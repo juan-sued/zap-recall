@@ -8,10 +8,8 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { ICategory } from '@/interfaces/categories'
 import { IZapBasic } from '@/interfaces/zapInterfaces'
-import { getCategories } from '@/services/categories'
-import zapsQuery, { getZaps } from '@/services/zaps'
+import zapsQuery from '@/services/zaps'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useQuery } from '@tanstack/react-query'
 import { Search } from 'lucide-react'
@@ -24,10 +22,10 @@ import { ListCardsZaps } from './ListCardZaps'
 export default function ListZaps() {
   const [isHovered, setIsHovered] = useState(false)
 
-  const categoriesQuery = useQuery<ICategory[]>({
-    queryKey: ['categories'],
-    queryFn: getCategories,
-  })
+  // const categoriesQuery = useQuery<ICategory[]>({
+  //   queryKey: ['categories'],
+  //   queryFn: getCategories,
+  // })
 
   const { data, isFetching, isError } = useQuery<IZapBasic[]>({
     queryKey: ['zaps'],

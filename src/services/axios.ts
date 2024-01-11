@@ -1,17 +1,14 @@
 import axios from 'axios'
+import { parseCookies } from 'nookies'
 
-const BASE_URL = 'http://localhost:4000'
+const { 'next-auth-token': token } = parseCookies()
 
-const axiosQuizzes = axios.create({
-  baseURL: BASE_URL + '/quizzes',
+const BASE_URL = 'http://localhost:4000/'
+
+const zapApiAxios = axios.create({
+  baseURL: BASE_URL,
 })
 
-const axiosCategories = axios.create({
-  baseURL: BASE_URL + '/categories',
-})
+if (token) zapApiAxios.defaults.headers.Authorization = `Bearer ${token}`
 
-const axiosAuth = axios.create({
-  baseURL: BASE_URL + '/auth',
-})
-
-export { axiosCategories, axiosQuizzes, axiosAuth }
+export { zapApiAxios }
