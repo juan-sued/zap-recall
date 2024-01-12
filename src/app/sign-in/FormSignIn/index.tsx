@@ -16,12 +16,8 @@ import { Input } from '@/components/ui/input'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { signInFormSchema } from './schemas'
-import { useToast } from '@/components/ui/use-toast'
 import { SignInFormValues } from './types'
 import Link from 'next/link'
-
-import { useRouter } from 'next/navigation'
-
 import { useContext } from 'react'
 import { AuthContext } from '@/providers/AuthContext'
 
@@ -67,7 +63,11 @@ export default function FormSignIn() {
               <FormItem className="w-full">
                 <FormLabel>Senha</FormLabel>
                 <FormControl>
-                  <Input placeholder="senhaSecreta123" {...field} />
+                  <Input
+                    type="password"
+                    placeholder="senhaSecreta123"
+                    {...field}
+                  />
                 </FormControl>
                 <FormDescription>Digite sua senha.</FormDescription>
                 <FormMessage />
@@ -78,7 +78,7 @@ export default function FormSignIn() {
 
         <section className="w-full flex flex-col justify-center items-center gap-7">
           <Button
-            className="bg-green-600 transition-all hover:bg-green-700 hover:scale-105  active:scale-95 flex gap-3 w-full"
+            className="bg-green-600 transition-all hover:bg-green-700 active:scale-95 flex gap-3 w-full"
             type="submit"
           >
             Login

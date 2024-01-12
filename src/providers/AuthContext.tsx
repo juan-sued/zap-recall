@@ -5,18 +5,25 @@ import { IUser } from '@/interfaces/userInterfaces'
 import { useRouter } from 'next/navigation'
 import { useMutation } from '@tanstack/react-query'
 import { toast } from '@/components/ui/use-toast'
-import { zapApiAxios } from '@/services/axios'
+import { api } from '@/services/api'
 
 type SignInData = {
   email: string
   password: string
 }
 
+type SignUpData = {
+  name: string
+  email: string
+  password: string
+  confirmPassword: string
+}
+
 type AuthContextType = {
   user: IUser | null
   signIn: (data: SignInData) => Promise<void>
+  signUp: (data: SignUpData) => Promise<void>
   refreshUserInformations: () => Promise<void>
-
   isAuthenticated: boolean
 }
 
@@ -27,6 +34,40 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const [user, setUser] = useState<IUser | null>(null)
   const isAuthenticated = !!user
+
+  const signUpMutation = useMutation({
+    mutationFn: authQuery.signUp,
+    onError: (error) => {
+      if (error.message.includes('422')) {
+        toast({
+          variant: 'destructive',
+          title: `Opss!!! ${error.message}`,
+        })
+      } else {
+        toast({
+          variant: 'destructive',
+          title: 'Lamento! Não foi possível logar',
+        })
+      }
+    },
+    onSuccess: () => {
+      toast({
+        variant: 'sucess',
+        title: `Cadastrado com sucesso!`,
+      })
+
+      router.push('/')
+    },
+  })
+
+  async function signUp({
+    name,
+    email,
+    password,
+    confirmPassword,
+  }: SignUpData) {
+    signUpMutation.mutate({ name, email, password, confirmPassword })
+  }
 
   const signInMutation = useMutation({
     mutationFn: authQuery.signIn,
@@ -47,7 +88,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setCookie(undefined, 'next-auth-token', data.token, {
         maxAge: 60 * 60 * 100, // 100h
       })
-      zapApiAxios.defaults.headers.Authorization = `Bearer ${data.token}`
+      api.defaults.headers.Authorization = `Bearer ${data.token}`
       setUser(data.user)
       const firstName = data.user.name.split(' ')[0]
 
@@ -70,7 +111,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, user, signIn, refreshUserInformations }}
+      value={{ isAuthenticated, user, signIn, refreshUserInformations, signUp }}
     >
       {children}
     </AuthContext.Provider>

@@ -1,18 +1,18 @@
 import { ZapFormValues } from '@/app/create-zap/FormCreateZap/types'
-import { zapApiAxios } from '../axios'
+import { api } from '../api'
 
 export async function getZaps() {
-  const response = await zapApiAxios.get('quizzes/')
+  const response = await api.get('quizzes/')
   return response.data
 }
 
 export async function getZapById(id: number) {
-  const response = await zapApiAxios.get(`quizzes/${id}`)
+  const response = await api.get(`quizzes/${id}`)
   return response.data
 }
 
 export async function createZap(zap: ZapFormValues) {
-  const response = await zapApiAxios.post('quizzes/', zap)
+  const response = await api.post('quizzes/', zap)
 
   return response.data
 }

@@ -103,7 +103,11 @@ export default function FormSignUp() {
               <FormItem className="w-full">
                 <FormLabel>Senha</FormLabel>
                 <FormControl>
-                  <Input placeholder="senhaSecreta123" {...field} />
+                  <Input
+                    type="password"
+                    placeholder="senhaSecreta123"
+                    {...field}
+                  />
                 </FormControl>
                 <FormDescription>Uma mega senha.</FormDescription>
                 <FormMessage />
@@ -117,7 +121,11 @@ export default function FormSignUp() {
               <FormItem className="w-full">
                 <FormLabel>Confirmação de senha</FormLabel>
                 <FormControl>
-                  <Input placeholder="senhaSecreta123" {...field} />
+                  <Input
+                    type="password"
+                    placeholder="senhaSecreta123"
+                    {...field}
+                  />
                 </FormControl>
                 <FormDescription>Mesma senha que a anterior.</FormDescription>
                 <FormMessage />
@@ -128,7 +136,7 @@ export default function FormSignUp() {
 
         <section className="w-full flex flex-col justify-center items-center gap-7">
           <Button
-            className="bg-green-600 transition-all hover:bg-green-700 hover:scale-105  active:scale-95 flex gap-3 w-full"
+            className="bg-green-600 transition-all hover:bg-green-700   active:scale-95 flex gap-3 w-full"
             type="submit"
           >
             Cadastrar

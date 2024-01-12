@@ -1,7 +1,7 @@
-import { zapApiAxios } from '../axios'
+import { api } from '../axios'
 
 export const getCategories = async () => {
-  const response = await zapApiAxios.get('categories/')
+  const response = await api.get('categories/')
 
   return response.data
 }
