@@ -1,4 +1,4 @@
-import { ZapFormValues } from '@/app/create-zap/FormCreateZap/types'
+import { ZapFormValues } from '@/app/(privates-routes)/create-zap/FormCreateZap/types'
 import { api } from '../api'
 
 export async function getZaps() {

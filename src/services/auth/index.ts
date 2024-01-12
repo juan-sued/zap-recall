@@ -1,5 +1,5 @@
-import { SignInFormValues } from '@/app/sign-in/FormSignIn/types'
-import { SignUpFormValues } from '@/app/sign-up/FormSignUp/types'
+import { SignInFormValues } from '@/app/(auth-routes)/sign-in/FormSignIn/types'
+import { SignUpFormValues } from '@/app/(auth-routes)/sign-up/FormSignUp/types'
 import { IUser } from '@/interfaces/userInterfaces'
 import { ISignInResponse } from '@/interfaces/authInterfaces'
 import { api } from '../api'

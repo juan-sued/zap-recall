@@ -1,6 +1,6 @@
 import authQuery from '@/services/auth'
 import { ReactNode, createContext, useState } from 'react'
-import { setCookie } from 'nookies'
+import { setCookie, destroyCookie } from 'nookies'
 import { IUser } from '@/interfaces/userInterfaces'
 import { useRouter } from 'next/navigation'
 import { useMutation } from '@tanstack/react-query'
@@ -25,6 +25,7 @@ type AuthContextType = {
   signUp: (data: SignUpData) => Promise<void>
   refreshUserInformations: () => Promise<void>
   isAuthenticated: boolean
+  logout: () => void
 }
 
 export const AuthContext = createContext({} as AuthContextType)
@@ -96,8 +97,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         variant: 'sucess',
         title: `Que bom te ver por aqui,  ${firstName}`,
       })
-
-      router.push('/')
     },
   })
 
@@ -109,9 +108,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     authQuery.recoverUserInformation()
   }
 
+  function logout(): void {
+    destroyCookie(undefined, 'next-auth-token')
+    setUser(null)
+  }
+
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, user, signIn, refreshUserInformations, signUp }}
+      value={{
+        isAuthenticated,
+        user,
+        signIn,
+        refreshUserInformations,
+        signUp,
+        logout,
+      }}
     >
       {children}
     </AuthContext.Provider>

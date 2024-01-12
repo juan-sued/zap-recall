@@ -11,11 +11,21 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { LayoutDashboard, Settings, User, User2 } from 'lucide-react'
+import { AuthContext } from '@/providers/AuthContext'
+import {
+  LayoutDashboard,
+  LogOut,
+  LogOutIcon,
+  Settings,
+  User,
+  User2,
+} from 'lucide-react'
 import { useTheme } from 'next-themes'
 import Link from 'next/link'
+import { useContext } from 'react'
 
 export function UserNav() {
+  const { logout, isAuthenticated, user } = useContext(AuthContext)
   const { theme, setTheme } = useTheme()
   function alterTheme() {
     if (theme === 'dark') {
@@ -105,13 +115,17 @@ export function UserNav() {
               <span onClick={alterTheme}>Alternar tema</span>
               <ThemeSwitcher />
             </DropdownMenuItem>
-
-            <DropdownMenuSeparator />
-            <Link href="/sign-in">
-              <DropdownMenuItem className="cursor-pointer">
-                Sair <DropdownMenuShortcut>⌘L</DropdownMenuShortcut>
-              </DropdownMenuItem>
-            </Link>
+            {isAuthenticated ? (
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="cursor-pointer" onClick={logout}>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Sair <DropdownMenuShortcut>⌘L</DropdownMenuShortcut>
+                </DropdownMenuItem>
+              </>
+            ) : (
+              ''
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
