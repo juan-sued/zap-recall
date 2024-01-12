@@ -8,10 +8,8 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { ICategory } from '@/interfaces/categories'
 import { IZapBasic } from '@/interfaces/zapInterfaces'
-import { getCategories } from '@/services/categories'
-import { getZaps } from '@/services/zaps'
+import zapsQuery from '@/services/zaps'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useQuery } from '@tanstack/react-query'
 import { Search } from 'lucide-react'
@@ -24,14 +22,14 @@ import { ListCardsZaps } from './ListCardZaps'
 export default function ListZaps() {
   const [isHovered, setIsHovered] = useState(false)
 
-  const categoriesQuery = useQuery<ICategory[]>({
-    queryKey: ['categories'],
-    queryFn: getCategories,
-  })
+  // const categoriesQuery = useQuery<ICategory[]>({
+  //   queryKey: ['categories'],
+  //   queryFn: getCategories,
+  // })
 
   const { data, isFetching, isError } = useQuery<IZapBasic[]>({
     queryKey: ['zaps'],
-    queryFn: getZaps,
+    queryFn: zapsQuery.getZaps,
   })
 
   const [filteredListSearch, setFilteredListSearch] = useState<
@@ -81,9 +79,10 @@ export default function ListZaps() {
                       </div>
 
                       <Input
+                        type="text"
                         placeholder={'Buscar Zaps'}
                         {...field}
-                        className={`w-1 pl-7 overflow-hidden rounded-full text-white placeholder:text-white shadow-lg shadow-red-900 border-none hover:w-80 hover:shadow-inner transition-all hover:duration-1000 active:w-80  bg-red-500 dark:bg-slate-900  dark:shadow-slate-950  hover:pl-10 ${
+                        className={`w-1 pl-7 overflow-hidden rounded-full text-white placeholder:text-white shadow-lg shadow-red-900 border-none hover:w-80 hover:shadow-inner transition-all hover:duration-1000 active:w-80  bg-red-500  dark:bg-slate-900  dark:shadow-slate-950  hover:pl-10 ${
                           isHovered
                             ? 'duration-1000 w-80 pl-10 shadow-inner'
                             : ''

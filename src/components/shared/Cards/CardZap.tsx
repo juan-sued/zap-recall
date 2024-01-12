@@ -20,11 +20,9 @@ export default function CardZap({
   id,
   title,
   description,
-  category,
   percentEndings,
   attempts,
   updatedAt,
-  creatAt,
   className,
   ...props
 }: CardZap) {

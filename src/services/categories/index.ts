@@ -1,7 +1,7 @@
-import { axiosCategories } from '../axios'
+import { api } from '../api'
 
 export const getCategories = async () => {
-  const response = await axiosCategories.get('/')
+  const response = await api.get('categories/')
 
   return response.data
 }

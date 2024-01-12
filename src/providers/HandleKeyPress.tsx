@@ -1,6 +1,7 @@
 'use client'
 import { useRouter } from 'next/navigation'
-import { ReactNode, useEffect } from 'react'
+import { ReactNode, useContext, useEffect } from 'react'
+import { AuthContext } from './AuthContext'
 
 export default function HandleKeyPressProvider({
   children,
@@ -8,6 +9,7 @@ export default function HandleKeyPressProvider({
   children: ReactNode
 }) {
   const router = useRouter()
+  const { logout } = useContext(AuthContext)
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
@@ -23,7 +25,7 @@ export default function HandleKeyPressProvider({
             router.push('/profile')
             break
           case 'l':
-            router.push('/sign-in')
+            logout()
             break
           case 'ç':
             router.push('/config')
@@ -40,7 +42,7 @@ export default function HandleKeyPressProvider({
     return () => {
       document.removeEventListener('keydown', handleKeyDown)
     }
-  }, [router])
+  }, [logout, router])
 
   return <>{children}</>
 }

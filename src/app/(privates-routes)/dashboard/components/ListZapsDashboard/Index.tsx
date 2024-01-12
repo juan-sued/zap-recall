@@ -1,7 +1,7 @@
 import zapMocks from '@/Mock/ZapMocks'
+import CardListSimpleFlat from '@/components/shared/Cards/CardListSimpleFlat'
 
 import { Difficulties } from '@/interfaces/zapInterfaces'
-import CardListSimpleFlat from '../../../../components/shared/Cards/CardListSimpleFlat'
 
 export function ListSimpleFlat() {
   return (

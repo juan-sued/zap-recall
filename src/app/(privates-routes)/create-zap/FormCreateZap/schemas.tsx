@@ -15,7 +15,7 @@ export const zapFormSchema = z.object({
     .min(10, {
       message: 'A descrição deve conter mais de 10 caracteres.',
     })
-    .max(100, {
+    .max(200, {
       message: 'A descrição deve conter menos de 100 caracteres.',
     }),
 
@@ -34,7 +34,7 @@ export const zapFormSchema = z.object({
         .min(10, {
           message: 'A pergunta deve conter mais de 10 caracteres.',
         })
-        .max(100, {
+        .max(200, {
           message: 'A pergunta deve conter menos de 100 caracteres.',
         }),
       response: z
@@ -42,7 +42,7 @@ export const zapFormSchema = z.object({
         .min(1, {
           message: 'A reposta deve conter mais de 10 caracteres.',
         })
-        .max(100, {
+        .max(200, {
           message: 'A reposta deve conter menos de 100 caracteres.',
         }),
     }),

@@ -1,13 +1,28 @@
 import axios from 'axios'
+import { NextApiRequest, NextPageContext } from 'next'
+import { parseCookies } from 'nookies'
 
-const BASE_URL = 'http://localhost:4000'
+export function getAPICLient(
+  ctx?:
+    | Pick<NextPageContext, 'req'>
+    | {
+        req: NextApiRequest
+      }
+    | {
+        req: Request
+      }
+    | null
+    | undefined,
+) {
+  const { 'next-auth-token': token } = parseCookies(ctx)
 
-const axiosQuizzes = axios.create({
-  baseURL: BASE_URL + '/quizzes',
-})
+  const BASE_URL = 'http://localhost:4000/'
 
-const axiosCategories = axios.create({
-  baseURL: BASE_URL + '/categories',
-})
+  const api = axios.create({
+    baseURL: BASE_URL,
+  })
 
-export { axiosCategories, axiosQuizzes }
+  if (token) api.defaults.headers.Authorization = `Bearer ${token}`
+
+  return api
+}

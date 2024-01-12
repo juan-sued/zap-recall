@@ -14,37 +14,28 @@ import {
 import { Input } from '@/components/ui/input'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Check } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { signInFormSchema } from './schemas'
-import { useToast } from '@/components/ui/use-toast'
-import { ZapFormValues } from './types'
+import { SignInFormValues } from './types'
 import Link from 'next/link'
+import { useContext } from 'react'
+import { AuthContext } from '@/providers/AuthContext'
 
-const defaultValues: Partial<ZapFormValues> = {
+const defaultValues: Partial<SignInFormValues> = {
   email: '',
   password: '',
 }
 
 export default function FormSignIn() {
-  const { toast } = useToast()
-
-  const form = useForm<ZapFormValues>({
+  const { signIn } = useContext(AuthContext)
+  const form = useForm<SignInFormValues>({
     resolver: zodResolver(signInFormSchema),
     defaultValues,
     mode: 'onChange',
   })
 
-  function onSubmit(data: ZapFormValues) {
-    toast({
-      variant: 'sucess',
-      title: 'Você enviou os seguintes valores:',
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    })
+  async function onSubmit(data: SignInFormValues) {
+    await signIn(data)
   }
 
   return (
@@ -72,7 +63,11 @@ export default function FormSignIn() {
               <FormItem className="w-full">
                 <FormLabel>Senha</FormLabel>
                 <FormControl>
-                  <Input placeholder="senhaSecreta123" {...field} />
+                  <Input
+                    type="password"
+                    placeholder="senhaSecreta123"
+                    {...field}
+                  />
                 </FormControl>
                 <FormDescription>Digite sua senha.</FormDescription>
                 <FormMessage />
@@ -83,7 +78,7 @@ export default function FormSignIn() {
 
         <section className="w-full flex flex-col justify-center items-center gap-7">
           <Button
-            className="bg-green-600 transition-all hover:bg-green-700 hover:scale-105  active:scale-95 flex gap-3 w-full"
+            className="bg-green-600 transition-all hover:bg-green-700 active:scale-95 flex gap-3 w-full"
             type="submit"
           >
             Login
