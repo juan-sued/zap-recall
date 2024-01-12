@@ -5,15 +5,13 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { IZap } from '@/interfaces/zapInterfaces'
-import zapsQuery, { getZaps } from '@/services/zaps'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import zapsQuery from '@/services/zaps'
+import { useQuery } from '@tanstack/react-query'
 import { PlayIcon, User2 } from 'lucide-react'
 import { useParams } from 'next/navigation'
 
 export default function ZapView() {
   const params = useParams()
-
-  const queryClient = useQueryClient()
 
   const { data, isFetching, isError } = useQuery<IZap>({
     queryKey: ['zapById'],

@@ -25,7 +25,6 @@ export default function PageBasicTemplate({
   titlePage,
   cardTitle,
   cardDescription,
-  cardFooter,
   className,
   haveMotivations = true,
 }: IPageBasicTemplate) {
