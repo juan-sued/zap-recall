@@ -60,7 +60,7 @@ export default function ZapView() {
               <li>Dificuldade: Média</li>
             </ul>
 
-            <div className="border min-w-fit rounded-lg flex flex-col items-center justify-center sm:flex-row    gap-3 p-4 text-slate-800  transition-all hover:bg-slate-200 dark:hover:bg-slate-900 hover:cursor-pointer active:scale-95 ">
+            <div className="border  w-[150px] sm:w-fit rounded-lg flex flex-col items-center justify-center sm:flex-row    gap-3 p-4 text-slate-800  transition-all hover:bg-slate-200 dark:hover:bg-slate-900 hover:cursor-pointer active:scale-95 ">
               <Avatar>
                 <AvatarImage
                   src="https://avatars.githubusercontent.com/u/92616927?v=4"
@@ -71,8 +71,8 @@ export default function ZapView() {
                 </AvatarFallback>
               </Avatar>
 
-              <div className=" flex flex-col justify-center">
-                <h3 className="text-sm text-muted-foreground">
+              <div className=" flex flex-col justify-center  text-center gap-3">
+                <h3 className="text-sm text-muted-foreground truncate max-w-[250px]">
                   {data.user.name}
                 </h3>
                 <p className="text-sm text-muted-foreground">14 Zaps</p>

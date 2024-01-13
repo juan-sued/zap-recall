@@ -16,10 +16,11 @@ export function getAPICLient(
 ) {
   const { 'next-auth-token': token } = parseCookies(ctx)
 
-  const BASE_URL = 'https://zap-recall-api-8o94.onrender.com/'
+  const PRODUCTION_URL = 'https://zap-recall-api-8o94.onrender.com/'
+  const DEV_URL = 'http://localhost:4000/'
 
   const api = axios.create({
-    baseURL: BASE_URL,
+    baseURL: DEV_URL,
   })
 
   if (token) api.defaults.headers.Authorization = `Bearer ${token}`

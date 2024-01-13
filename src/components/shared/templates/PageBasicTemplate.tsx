@@ -30,8 +30,10 @@ export default function PageBasicTemplate({
 }: IPageBasicTemplate) {
   return (
     <Main className="animate__animated animate__fadeIn space-y-9">
-      <section className="titleCreateZap">
-        <h1 className="drop-shadow text-2xl sm:text-5xl ">{titlePage}</h1>
+      <section className="titleCreateZap  w-full flex justify-center ">
+        <h1 className="drop-shadow w-full text-center h-full text-2xl sm:text-4xl lg:text-5xl break-words">
+          {titlePage}
+        </h1>
       </section>
       <section className="sectionFormCreateZap h-full w-full p-5 flex justify-center">
         <Card
@@ -41,10 +43,10 @@ export default function PageBasicTemplate({
           )}
         >
           <CardHeader>
-            <CardTitle className="text-slate-800 dark:text-slate-200 ">
+            <CardTitle className="text-slate-800 break-words dark:text-slate-200 ">
               {cardTitle}
             </CardTitle>
-            <CardDescription className="text-md">
+            <CardDescription className="text-md  break-words">
               {cardDescription}
             </CardDescription>
           </CardHeader>

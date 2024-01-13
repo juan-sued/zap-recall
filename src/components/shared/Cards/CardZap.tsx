@@ -41,15 +41,19 @@ export default function CardZap({
   return (
     <Card
       className={cn(
-        'w-full  h-full grid content-between shadow-md  shadow-[rgba(0,0,0,0.2)] transition-all  hover:cursor-pointer hover:shadow-lg hover:scale-105 active:scale-95 sm:min-w-fit',
+        'w-full  h-full max-w-[390px] grid content-between shadow-md   shadow-[rgba(0,0,0,0.2)] transition-all  hover:cursor-pointer hover:shadow-lg hover:scale-105 active:scale-95 sm:w-fit ',
         className,
       )}
       {...props}
       onClick={() => goToZapView(id)}
     >
       <CardHeader>
-        <CardTitle>{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
+        <CardTitle className="truncate w-[265px] sm:w-[345px] ">
+          {title}
+        </CardTitle>
+        <CardDescription className="truncate w-[265px] sm:w-[345px]">
+          {description}
+        </CardDescription>
       </CardHeader>
 
       <CardFooter className="text-muted-foreground  gap-4 px-14  flex flex-col justify-center  sm:flex-row sm:px-6 sm:gap-0 sm:justify-between">
