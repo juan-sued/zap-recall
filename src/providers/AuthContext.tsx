@@ -57,7 +57,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         title: `Cadastrado com sucesso!`,
       })
 
-      router.push('/')
+      router.push('/sign-in')
     },
   })
 
