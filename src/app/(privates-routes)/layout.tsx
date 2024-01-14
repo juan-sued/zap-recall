@@ -1,18 +1,18 @@
 'use client'
 
-import { AuthContext } from '@/providers/AuthContext'
 import { redirect } from 'next/navigation'
-import { ReactNode, useContext } from 'react'
+import { parseCookies } from 'nookies'
+import { ReactNode } from 'react'
 
 interface PrivateLayoutProps {
   children: ReactNode
 }
 
 export default function PrivateLayout({ children }: PrivateLayoutProps) {
-  const { isAuthenticated } = useContext(AuthContext)
+  const { 'next-auth-token': token } = parseCookies()
 
-  console.log(isAuthenticated)
-  if (isAuthenticated) {
+  console.log(token)
+  if (token) {
     return <>{children}</>
   } else {
     redirect('/sign-in')
