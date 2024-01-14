@@ -1,6 +1,6 @@
 import authQuery from '@/services/auth'
-import { ReactNode, createContext, useState } from 'react'
-import { setCookie, destroyCookie } from 'nookies'
+import { ReactNode, createContext, useEffect, useState } from 'react'
+import { setCookie, destroyCookie, parseCookies } from 'nookies'
 import { IUser } from '@/interfaces/userInterfaces'
 import { useRouter } from 'next/navigation'
 import { useMutation } from '@tanstack/react-query'
@@ -32,7 +32,6 @@ export const AuthContext = createContext({} as AuthContextType)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const router = useRouter()
-
   const [user, setUser] = useState<IUser | null>(null)
   const isAuthenticated = !!user
 
@@ -97,6 +96,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         variant: 'sucess',
         title: `Que bom te ver por aqui,  ${firstName}`,
       })
+
+      router.replace('/')
     },
   })
 
@@ -105,13 +106,32 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   async function refreshUserInformations() {
-    authQuery.recoverUserInformation()
+    return await authQuery
+      .recoverUserInformation()
+      .then((data) => {
+        setUser(data)
+      })
+      .catch(() => {
+        toast({
+          variant: 'destructive',
+          title: 'Lamento! Não foi possível validar o login',
+        })
+      })
   }
 
   function logout(): void {
     destroyCookie(undefined, 'next-auth-token')
     setUser(null)
+    router.replace('/sign-in')
   }
+
+  useEffect(() => {
+    const { 'next-auth-token': token } = parseCookies()
+
+    if (token) {
+      refreshUserInformations()
+    }
+  }, [])
 
   return (
     <AuthContext.Provider
