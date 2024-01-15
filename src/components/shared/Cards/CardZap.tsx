@@ -23,6 +23,8 @@ export default function CardZap({
   percentEndings,
   attempts,
   updatedAt,
+  creatAt,
+  category,
   className,
   ...props
 }: CardZap) {

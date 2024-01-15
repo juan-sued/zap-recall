@@ -56,7 +56,7 @@ export default function ListZaps() {
   })
   return (
     <>
-      <section className="searchZaps w-full flex flex-col space-y-8 items-center justify-center mt-10">
+      <section className="searchZaps w-full flex flex-col space-y-8 items-center justify-center mt-10 ">
         <div className="flex w-full justify-center items-center gap-2">
           <AddZapButton>Crie</AddZapButton>
           <h2>ou busque um Zap</h2>

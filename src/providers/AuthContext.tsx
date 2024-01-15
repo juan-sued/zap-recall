@@ -96,8 +96,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         variant: 'sucess',
         title: `Que bom te ver por aqui,  ${firstName}`,
       })
-
-      router.replace('/')
     },
   })
 
@@ -122,6 +120,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   function logout(): void {
     destroyCookie(undefined, 'next-auth-token')
     setUser(null)
+    const firstName = user?.name.split(' ')[0]
+
+    toast({
+      variant: 'sucess',
+      title: `Esperamos que volte em breve,  ${firstName}`,
+    })
     router.replace('/sign-in')
   }
 

@@ -10,7 +10,7 @@ import { useQuery } from '@tanstack/react-query'
 import { PlayIcon, User2 } from 'lucide-react'
 import { useParams } from 'next/navigation'
 
-export default function ZapView() {
+export default function ZapViewPage() {
   const params = useParams()
 
   const { data, isFetching, isError } = useQuery<IZap>({
