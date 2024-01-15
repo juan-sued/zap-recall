@@ -26,6 +26,7 @@ import { useContext } from 'react'
 
 export function UserNav() {
   const { logout, isAuthenticated, user } = useContext(AuthContext)
+
   const { theme, setTheme } = useTheme()
   function alterTheme() {
     if (theme === 'dark') {
@@ -36,6 +37,8 @@ export function UserNav() {
   }
 
   if (isAuthenticated) {
+    const emailAndDomain = user?.email.split('@') ?? ['', '']
+
     return (
       <>
         <div className="w-1/3  flex justify-end">
@@ -60,12 +63,17 @@ export function UserNav() {
             >
               <DropdownMenuLabel className="font-normal ">
                 <div className="flex flex-col space-y-1">
-                  <p className="text-sm font-medium leading-none">
+                  <p className="text-sm font-medium leading-none truncate">
                     {user?.name}
                   </p>
-                  <p className="text-xs leading-none text-muted-foreground">
-                    {user?.email}
-                  </p>
+                  <div className="flex">
+                    <p className="text-xs leading-none text-muted-foreground truncate">
+                      {emailAndDomain[0]}
+                    </p>
+                    <p className="text-xs leading-none text-muted-foreground">
+                      {'@' + emailAndDomain[1]}
+                    </p>
+                  </div>
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />

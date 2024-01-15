@@ -6,7 +6,7 @@ const MENU_BUTTONS_LOGGED = [
   { title: 'Início', link: '/' },
   { title: 'Dashboard', link: '/dashboard' },
   { title: 'Ranking', link: '/ranking' },
-  { title: 'Configurações', link: '/profile' },
+  { title: 'Configurações', link: '/config' },
 ]
 const MENU_BUTTONS_UNLOGGED = [
   { title: 'Início', link: '/' },
