@@ -1,17 +1,17 @@
 'use client'
 
+import { AuthContext } from '@/providers/AuthContext'
 import { redirect } from 'next/navigation'
-import { parseCookies } from 'nookies'
-import { ReactNode } from 'react'
+import { ReactNode, useContext } from 'react'
 
 interface AuthLayoutProps {
   children: ReactNode
 }
 
 export default function AuthLayout({ children }: AuthLayoutProps) {
-  const { 'next-auth-token': token } = parseCookies()
+  const { isAuthenticated } = useContext(AuthContext)
 
-  if (token) {
+  if (isAuthenticated) {
     redirect('/')
   } else {
     return <>{children}</>

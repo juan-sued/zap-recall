@@ -39,6 +39,8 @@ import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import { zapFormSchema } from './schemas'
 import { ZapFormValues } from './types'
 import { createZap } from '@/services/zaps'
+import { useState } from 'react'
+import { Checkbox } from '@/components/ui/checkbox'
 const defaultValues: Partial<ZapFormValues> = {
   title: '',
   description: '',
@@ -54,6 +56,7 @@ const defaultValues: Partial<ZapFormValues> = {
 
 export default function FormCreateZap() {
   const router = useRouter()
+  const [isCheckedNewCategory, setIsCheckedNewCategory] = useState(false)
 
   const queryClient = useQueryClient()
 
@@ -95,19 +98,18 @@ export default function FormCreateZap() {
     },
   })
   function onSubmit(data: ZapFormValues) {
-    // validate categories
-    if (data.categoryId && data.newCategory) {
+    if (isCheckedNewCategory) {
+      data.categoryId = null
+    } else if (!isCheckedNewCategory) {
+      data.newCategory = ''
+    }
+    if (data.categoryId === null && data.newCategory === '') {
       form.setError('categoryId', {
-        message: 'Escolha apenas uma.',
+        message: 'Selecione ou crie uma categoria.',
       })
       return
-    } else if (data.categoryId === null && data.newCategory === '') {
-      form.setError('categoryId', {
-        message: 'Não é possível criar sem uma categoria.',
-      })
-
-      return
-    } else if (data.questions.length === 0) {
+    }
+    if (data.questions.length === 0) {
       toast({
         variant: 'destructive',
         title: 'Deve ser criado ao menos uma pergunta.',
@@ -172,6 +174,7 @@ export default function FormCreateZap() {
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
+                        disabled={isCheckedNewCategory}
                         type="button"
                         variant="outline"
                         role="combobox"
@@ -230,11 +233,21 @@ export default function FormCreateZap() {
           />
 
           <FormField
+            disabled={!isCheckedNewCategory}
             control={form.control}
             name="newCategory"
             render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel>Nova categoria</FormLabel>
+              <FormItem className="w-full  pt-1">
+                <div className="flex gap-2 justify-start items-center">
+                  <Checkbox
+                    onClick={() =>
+                      setIsCheckedNewCategory(!isCheckedNewCategory)
+                    }
+                    checked={isCheckedNewCategory}
+                  />
+                  <FormLabel>Nova categoria</FormLabel>
+                </div>
+
                 <FormControl>
                   <Input placeholder="Biologia Molecular" {...field} />
                 </FormControl>

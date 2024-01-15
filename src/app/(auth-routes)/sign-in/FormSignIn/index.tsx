@@ -18,7 +18,7 @@ import { useForm } from 'react-hook-form'
 import { signInFormSchema } from './schemas'
 import { SignInFormValues } from './types'
 import Link from 'next/link'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { AuthContext } from '@/providers/AuthContext'
 
 const defaultValues: Partial<SignInFormValues> = {
@@ -33,8 +33,9 @@ export default function FormSignIn() {
     defaultValues,
     mode: 'onChange',
   })
-
+  const [isDisabledButton, setIsDisabledButton] = useState(false)
   async function onSubmit(data: SignInFormValues) {
+    setIsDisabledButton(true)
     await signIn(data)
   }
 
@@ -78,6 +79,7 @@ export default function FormSignIn() {
 
         <section className="w-full flex flex-col justify-center items-center gap-7">
           <Button
+            disabled={isDisabledButton}
             className="bg-green-600 transition-all hover:bg-green-700 active:scale-95 flex gap-3 w-full"
             type="submit"
           >

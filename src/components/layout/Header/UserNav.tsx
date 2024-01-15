@@ -11,8 +11,16 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 import { AuthContext } from '@/providers/AuthContext'
 import {
+  CrownIcon,
+  HomeIcon,
   LayoutDashboard,
   LogIn,
   LogOut,
@@ -26,6 +34,7 @@ import { useContext } from 'react'
 
 export function UserNav() {
   const { logout, isAuthenticated, user } = useContext(AuthContext)
+
   const { theme, setTheme } = useTheme()
   function alterTheme() {
     if (theme === 'dark') {
@@ -36,23 +45,36 @@ export function UserNav() {
   }
 
   if (isAuthenticated) {
+    const emailAndDomain = user?.email.split('@') ?? ['', '']
+
     return (
       <>
         <div className="w-1/3  flex justify-end">
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button className="  bg-transparent  hover:bg-transparent dark:bg-transparent  rounded-full  w-12 h-12">
-                <Avatar className="h-12 w-12 ">
-                  <AvatarImage
-                    src="https://avatars.githubusercontent.com/u/92616927?v=4"
-                    alt="Avatar Image"
-                  />
-                  <AvatarFallback className="bg-pinkTheme-500 dark:bg-blueTheme-500">
-                    <User2 />
-                  </AvatarFallback>
-                </Avatar>
-              </Button>
-            </DropdownMenuTrigger>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  {' '}
+                  <DropdownMenuTrigger asChild>
+                    <Button className="  bg-transparent  hover:bg-transparent dark:bg-transparent  rounded-full  w-12 h-12">
+                      <Avatar className="h-12 w-12 drop-shadow shadow-black dark:shadow-pinkTheme-500 ">
+                        <AvatarImage
+                          src="https://api.minimalavatars.com/avatar/random/svg"
+                          alt="Avatar Image"
+                        />
+                        <AvatarFallback className="bg-pinkTheme-500 dark:bg-blueTheme-500">
+                          <User2 />
+                        </AvatarFallback>
+                      </Avatar>
+                    </Button>
+                  </DropdownMenuTrigger>
+                </TooltipTrigger>
+                <TooltipContent className="dark:bg-slate-900">
+                  Menu
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
             <DropdownMenuContent
               className="relative top-1 w-56 "
               align="end"
@@ -60,12 +82,17 @@ export function UserNav() {
             >
               <DropdownMenuLabel className="font-normal ">
                 <div className="flex flex-col space-y-1">
-                  <p className="text-sm font-medium leading-none">
+                  <p className="text-sm font-medium leading-none truncate">
                     {user?.name}
                   </p>
-                  <p className="text-xs leading-none text-muted-foreground">
-                    {user?.email}
-                  </p>
+                  <div className="flex">
+                    <p className="text-xs leading-none text-muted-foreground truncate">
+                      {emailAndDomain[0]}
+                    </p>
+                    <p className="text-xs leading-none text-muted-foreground">
+                      {'@' + emailAndDomain[1]}
+                    </p>
+                  </div>
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
@@ -73,7 +100,7 @@ export function UserNav() {
               <DropdownMenuGroup>
                 <Link href="/">
                   <DropdownMenuItem className="cursor-pointer">
-                    <User className="mr-2 h-4 w-4" />
+                    <HomeIcon className="mr-2 h-4 w-4" />
                     <span>Início</span>
 
                     <DropdownMenuShortcut>⌘I</DropdownMenuShortcut>
@@ -90,7 +117,7 @@ export function UserNav() {
 
                 <Link href="/ranking">
                   <DropdownMenuItem className="cursor-pointer">
-                    <LayoutDashboard className="mr-2 h-4 w-4" />
+                    <CrownIcon className="mr-2 h-4 w-4" />
                     <span>Ranking</span>
                     <DropdownMenuShortcut>⌘3</DropdownMenuShortcut>
                   </DropdownMenuItem>
