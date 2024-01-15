@@ -11,6 +11,12 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 import { AuthContext } from '@/providers/AuthContext'
 import {
   LayoutDashboard,
@@ -43,19 +49,30 @@ export function UserNav() {
       <>
         <div className="w-1/3  flex justify-end">
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button className="  bg-transparent  hover:bg-transparent dark:bg-transparent  rounded-full  w-12 h-12">
-                <Avatar className="h-12 w-12 ">
-                  <AvatarImage
-                    src="https://avatars.githubusercontent.com/u/92616927?v=4"
-                    alt="Avatar Image"
-                  />
-                  <AvatarFallback className="bg-pinkTheme-500 dark:bg-blueTheme-500">
-                    <User2 />
-                  </AvatarFallback>
-                </Avatar>
-              </Button>
-            </DropdownMenuTrigger>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  {' '}
+                  <DropdownMenuTrigger asChild>
+                    <Button className="  bg-transparent  hover:bg-transparent dark:bg-transparent  rounded-full  w-12 h-12">
+                      <Avatar className="h-12 w-12 drop-shadow shadow-black dark:shadow-pinkTheme-500 ">
+                        <AvatarImage
+                          src="https://api.minimalavatars.com/avatar/random/svg"
+                          alt="Avatar Image"
+                        />
+                        <AvatarFallback className="bg-pinkTheme-500 dark:bg-blueTheme-500">
+                          <User2 />
+                        </AvatarFallback>
+                      </Avatar>
+                    </Button>
+                  </DropdownMenuTrigger>
+                </TooltipTrigger>
+                <TooltipContent className="dark:bg-slate-900">
+                  Menu
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
             <DropdownMenuContent
               className="relative top-1 w-56 "
               align="end"

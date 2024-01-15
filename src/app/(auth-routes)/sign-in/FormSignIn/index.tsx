@@ -33,9 +33,9 @@ export default function FormSignIn() {
     defaultValues,
     mode: 'onChange',
   })
-  const [isDisabledButton, setIsDisableButton] = useState(false)
+  const [isDisabledButton, setIsDisabledButton] = useState(false)
   async function onSubmit(data: SignInFormValues) {
-    setIsDisableButton(true)
+    setIsDisabledButton(true)
     await signIn(data)
   }
 
