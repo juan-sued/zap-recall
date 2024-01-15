@@ -166,7 +166,7 @@ export function UserNav() {
               <Button className="  bg-transparent  hover:bg-transparent dark:bg-transparent  rounded-full  w-12 h-12">
                 <Avatar className="h-12 w-12 ">
                   <AvatarImage
-                    src="https://avatars.githubusercontent.com/u/92616927?v=4"
+                    src="https://api.minimalavatars.com/avatar/random/svg"
                     alt="Avatar Image"
                   />
                   <AvatarFallback className="bg-pinkTheme-500 dark:bg-blueTheme-500">
