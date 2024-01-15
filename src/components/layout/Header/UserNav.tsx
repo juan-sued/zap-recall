@@ -19,6 +19,8 @@ import {
 } from '@/components/ui/tooltip'
 import { AuthContext } from '@/providers/AuthContext'
 import {
+  CrownIcon,
+  HomeIcon,
   LayoutDashboard,
   LogIn,
   LogOut,
@@ -98,7 +100,7 @@ export function UserNav() {
               <DropdownMenuGroup>
                 <Link href="/">
                   <DropdownMenuItem className="cursor-pointer">
-                    <User className="mr-2 h-4 w-4" />
+                    <HomeIcon className="mr-2 h-4 w-4" />
                     <span>Início</span>
 
                     <DropdownMenuShortcut>⌘I</DropdownMenuShortcut>
@@ -115,7 +117,7 @@ export function UserNav() {
 
                 <Link href="/ranking">
                   <DropdownMenuItem className="cursor-pointer">
-                    <LayoutDashboard className="mr-2 h-4 w-4" />
+                    <CrownIcon className="mr-2 h-4 w-4" />
                     <span>Ranking</span>
                     <DropdownMenuShortcut>⌘3</DropdownMenuShortcut>
                   </DropdownMenuItem>
