@@ -63,7 +63,7 @@ export default function ZapViewPage() {
             <div className="border  w-[150px] sm:w-fit rounded-lg flex flex-col items-center justify-center sm:flex-row    gap-3 p-4 text-slate-800  transition-all hover:bg-slate-200 dark:hover:bg-slate-900 hover:cursor-pointer active:scale-95 ">
               <Avatar>
                 <AvatarImage
-                  src="https://avatars.githubusercontent.com/u/92616927?v=4"
+                  src="https://api.minimalavatars.com/avatar/random/svg"
                   alt="Avatar Image"
                 />
                 <AvatarFallback>
@@ -71,8 +71,8 @@ export default function ZapViewPage() {
                 </AvatarFallback>
               </Avatar>
 
-              <div className=" flex flex-col justify-center  text-center gap-3">
-                <h3 className="text-sm text-muted-foreground truncate max-w-[250px]">
+              <div className=" flex flex-col justify-center  text-center gap-3  max-w-[150px] p-5">
+                <h3 className="text-sm text-muted-foreground  truncate">
                   {data.user.name}
                 </h3>
                 <p className="text-sm text-muted-foreground">14 Zaps</p>
