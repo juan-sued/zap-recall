@@ -37,7 +37,7 @@ export default function CardZap({
   }, [])
 
   function goToZapView(id: number) {
-    router.push(`/zap-view/${id}`)
+    router.push(`/zap/${id}`)
   }
 
   return (

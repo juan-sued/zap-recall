@@ -1,5 +1,6 @@
 'use client'
 
+import SkeletonCard from '@/components/shared/Loaders/SkeletonCard'
 import PageBasicTemplate from '@/components/shared/templates/PageBasicTemplate'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
@@ -8,7 +9,7 @@ import { IZap } from '@/interfaces/zapInterfaces'
 import zapsQuery from '@/services/zaps'
 import { useQuery } from '@tanstack/react-query'
 import { PlayIcon, User2 } from 'lucide-react'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 
 export default function ZapViewPage() {
   const params = useParams()
@@ -18,35 +19,19 @@ export default function ZapViewPage() {
     queryFn: () => zapsQuery.getZapById(Number(params.zapId)),
   })
 
-  if (isFetching) {
-    return (
-      <div className="containerLoading">
-        <PageBasicTemplate>
-          <section className="skeletons flex flex-col gap-2">
-            <div className="space-y-2">
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-4 w-[200px]" />
-            </div>
-            <div className="flex gap-4 items-center">
-              <Skeleton className="h-4 w-[100px]" />
-              <Skeleton className="h-4 w-[150px]" />
-              <Skeleton className="h-4 w-[120px]" />
-              <Skeleton className="h-4 w-[100px]" />
-              <Skeleton className="w-[100px] h-[120px]" />
-            </div>
-          </section>
-        </PageBasicTemplate>
-      </div>
-    )
-  } else if (data) {
+  const router = useRouter()
+
+  if (data) {
     return (
       <div className="animate__animated animate__fadeIn ">
         <PageBasicTemplate
           titlePage={data.title}
           cardDescription={data.description}
         >
-          <Button className="bg-green-400 w-full  p-6 hover:bg-green-500  active:scale-95 transition-all">
+          <Button
+            className="bg-green-400 w-full  p-6 hover:bg-green-500  active:scale-95 transition-all"
+            onClick={() => router.push(`/zap/${params.zapId}/play`)}
+          >
             <div className="contentButton flex">
               <PlayIcon />
             </div>
@@ -81,6 +66,13 @@ export default function ZapViewPage() {
           </section>
         </PageBasicTemplate>
       </div>
+    )
+  } else if (isFetching) {
+    return (
+      <PageBasicTemplate>
+        <SkeletonCard />
+        <SkeletonCard />
+      </PageBasicTemplate>
     )
   } else if (isError) {
     return (

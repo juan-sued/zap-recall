@@ -54,7 +54,6 @@ export function UserNav() {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
-                  {' '}
                   <DropdownMenuTrigger asChild>
                     <Button className="  bg-transparent  hover:bg-transparent dark:bg-transparent  rounded-full  w-12 h-12">
                       <Avatar className="h-12 w-12 drop-shadow shadow-black dark:shadow-pinkTheme-500 ">
