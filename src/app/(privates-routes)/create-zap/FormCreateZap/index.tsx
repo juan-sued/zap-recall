@@ -38,9 +38,9 @@ import { useRouter } from 'next/navigation'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import { zapFormSchema } from './schemas'
 import { ZapFormValues } from './types'
-import { createZap } from '@/services/zaps'
 import { useState } from 'react'
 import { Checkbox } from '@/components/ui/checkbox'
+import zapsQuery from '@/services/zaps'
 const defaultValues: Partial<ZapFormValues> = {
   title: '',
   description: '',
@@ -79,7 +79,7 @@ export default function FormCreateZap() {
   const { toast } = useToast()
 
   const { mutate } = useMutation({
-    mutationFn: createZap,
+    mutationFn: zapsQuery.createZap,
     onError: () => {
       toast({
         variant: 'destructive',

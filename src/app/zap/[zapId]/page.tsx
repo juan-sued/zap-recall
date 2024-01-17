@@ -4,7 +4,6 @@ import SkeletonCard from '@/components/shared/Loaders/SkeletonCard'
 import PageBasicTemplate from '@/components/shared/templates/PageBasicTemplate'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
-import { Skeleton } from '@/components/ui/skeleton'
 import { IZap } from '@/interfaces/zapInterfaces'
 import zapsQuery from '@/services/zaps'
 import { useQuery } from '@tanstack/react-query'
@@ -39,7 +38,7 @@ export default function ZapViewPage() {
 
           <section className="contentDetails flex justify-between items-center pt-6  pb-2">
             <ul className=" flex flex-col sm:flex-row  gap-3  justify-between     text-sm text-slate-800 dark:text-slate-200">
-              <li>Perguntas: {data.quizzyQuestion.length}</li>
+              <li>Perguntas: {data.questions.length}</li>
               <li>Categoria: {data.category.title}</li>
               <li>Terminaram: 53</li>
               <li>Dificuldade: Média</li>

@@ -25,8 +25,10 @@ export interface IQuestion {
   response: string
 }
 
-export interface IQuizzyQuestion {
-  question: IQuestion
+export interface IQuestions {
+  id: number
+  question: string
+  response: string
 }
 
 export interface IZap {
@@ -38,5 +40,5 @@ export interface IZap {
   difficulty: Difficulties
   category: ICategory
   user: IUser
-  quizzyQuestion: IQuizzyQuestion[]
+  questions: IQuestions[]
 }
