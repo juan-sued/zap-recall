@@ -28,12 +28,15 @@ const defaultValues: Partial<SignInFormValues> = {
 
 export default function FormSignIn() {
   const { signIn } = useContext(AuthContext)
+
   const form = useForm<SignInFormValues>({
     resolver: zodResolver(signInFormSchema),
     defaultValues,
     mode: 'onChange',
   })
+
   const [isDisabledButton, setIsDisabledButton] = useState(false)
+
   async function onSubmit(data: SignInFormValues) {
     setIsDisabledButton(true)
     await signIn(data)
