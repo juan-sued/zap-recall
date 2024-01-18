@@ -7,10 +7,11 @@ import { Button } from '@/components/ui/button'
 import { useToast } from '@/components/ui/use-toast'
 import { IZap } from '@/interfaces/zapInterfaces'
 import { cn } from '@/lib/utils'
+import { AuthContext } from '@/providers/AuthContext'
 import zapsQuery from '@/services/zaps'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import router from 'next/router'
-import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { useContext, useEffect, useState } from 'react'
 
 export interface IAnswer {
   questionId: number
@@ -23,6 +24,9 @@ export interface IObjRegisterAnswer {
 }
 
 export default function ZapPlayPage() {
+  const { isAuthenticated } = useContext(AuthContext)
+
+  const router = useRouter()
   const { toast } = useToast()
 
   const queryClient = useQueryClient()
@@ -41,6 +45,7 @@ export default function ZapPlayPage() {
 
   const registerAnswerMutation = useMutation({
     mutationFn: zapsQuery.registerAnswer,
+
     onError: (error) => {
       if (error.message.includes('422')) {
         toast({
@@ -64,9 +69,37 @@ export default function ZapPlayPage() {
       router.push('/')
     },
   })
+  const incrementAttemptMutation = useMutation({
+    mutationFn: zapsQuery.incrementAttempt,
+    onError: (error) => {
+      if (error.message.includes('422')) {
+        toast({
+          variant: 'destructive',
+          title: `Opss!!! ${error.message}`,
+        })
+      } else {
+        console.log(error.message)
+        toast({
+          variant: 'destructive',
+          title: 'Lamento! Não foi possível salvar sua resposta',
+        })
+      }
+    },
+    onSuccess: () => {
+      toast({
+        variant: 'sucess',
+        title: `Resposta salva com sucesso! Faça login para ter um histórico`,
+      })
 
+      router.push('/')
+    },
+  })
   async function registerAnswer({ quizId, answers }: IObjRegisterAnswer) {
-    registerAnswerMutation.mutate({ quizId, answers })
+    if (isAuthenticated) {
+      registerAnswerMutation.mutate({ quizId, answers })
+    } else {
+      incrementAttemptMutation.mutate(quizId)
+    }
   }
 
   function handleDataQuiz() {
@@ -112,7 +145,7 @@ export default function ZapPlayPage() {
         title: `Não desanime!!! A verdadeira derrota é a desistência!`,
       })
     }
-  }, [answerSelectedsList, toast, zap])
+  }, [answerSelectedsList, toast, zap, queryClient])
   if (zap) {
     return (
       <div className="animate__animated animate__fadeIn ">
