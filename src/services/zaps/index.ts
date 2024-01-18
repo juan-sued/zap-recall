@@ -19,7 +19,12 @@ async function createZap(zap: ZapFormValues) {
 }
 
 async function registerAnswer(data: IObjRegisterAnswer) {
-  const response = await api.post('quizzes/answers', data)
+  const response = await api.post('quizzes/answers/', data)
+
+  return response.data
+}
+async function incrementAttempt(id: number) {
+  const response = await api.post(`quizzes/attempts/${id}`, {})
 
   return response.data
 }
@@ -29,6 +34,7 @@ const zapsQuery = {
   getZapById,
   createZap,
   registerAnswer,
+  incrementAttempt,
 }
 
 export default zapsQuery
