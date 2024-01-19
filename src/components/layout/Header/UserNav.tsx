@@ -17,7 +17,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import { AuthContext } from '@/providers/AuthContext'
+import { useAuth } from '@/providers/useAuth'
 import {
   CrownIcon,
   HomeIcon,
@@ -30,10 +30,9 @@ import {
 } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import Link from 'next/link'
-import { useContext } from 'react'
 
 export function UserNav() {
-  const { logout, isAuthenticated, user } = useContext(AuthContext)
+  const { logout, isAuthenticated, user } = useAuth()
 
   const { theme, setTheme } = useTheme()
   function alterTheme() {
@@ -141,9 +140,15 @@ export function UserNav() {
                 </Link>
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className=" justify-between cursor-pointer">
-                <span onClick={alterTheme}>Alternar tema</span>
-                <ThemeSwitcher />
+              <DropdownMenuItem
+                className=" justify-between cursor-pointer"
+                onClick={alterTheme}
+              >
+                <span>Alternar tema</span>
+                <ThemeSwitcher
+                  isChecked={theme === 'dark'}
+                  onChange={alterTheme}
+                />
               </DropdownMenuItem>
 
               <DropdownMenuSeparator />
@@ -191,7 +196,7 @@ export function UserNav() {
 
                 <Link href="/ranking">
                   <DropdownMenuItem className="cursor-pointer">
-                    <LayoutDashboard className="mr-2 h-4 w-4" />
+                    <CrownIcon className="mr-2 h-4 w-4" />
                     <span>Ranking</span>
                     <DropdownMenuShortcut>⌘3</DropdownMenuShortcut>
                   </DropdownMenuItem>
@@ -208,9 +213,15 @@ export function UserNav() {
                 </Link>
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className=" justify-between cursor-pointer">
-                <span onClick={alterTheme}>Alternar tema</span>
-                <ThemeSwitcher />
+              <DropdownMenuItem
+                className="justify-between cursor-pointer"
+                onClick={alterTheme}
+              >
+                <span>Alternar tema</span>
+                <ThemeSwitcher
+                  isChecked={theme === 'dark'}
+                  onChange={alterTheme}
+                />
               </DropdownMenuItem>
 
               <DropdownMenuSeparator />

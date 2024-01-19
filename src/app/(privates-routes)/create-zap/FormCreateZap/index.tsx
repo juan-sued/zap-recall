@@ -27,20 +27,19 @@ import {
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Textarea } from '@/components/ui/textarea'
 import { useToast } from '@/components/ui/use-toast'
-import { ICategory } from '@/interfaces/categories'
 import { cn } from '@/lib/utils'
-import { getCategories } from '@/services/categories'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Check, CheckIcon, MoveVertical, Plus, Trash } from 'lucide-react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import { zapFormSchema } from './schemas'
 import { ZapFormValues } from './types'
 import { useState } from 'react'
 import { Checkbox } from '@/components/ui/checkbox'
-import zapsQuery from '@/services/zaps'
+import { useQuiz } from '@/providers/useQuiz'
+import { ICategory } from '@/interfaces/categories'
+import { getCategories } from '@/services/categories'
+import { useQuery } from '@tanstack/react-query'
 const defaultValues: Partial<ZapFormValues> = {
   title: '',
   description: '',
@@ -55,15 +54,14 @@ const defaultValues: Partial<ZapFormValues> = {
 }
 
 export default function FormCreateZap() {
-  const router = useRouter()
-  const [isCheckedNewCategory, setIsCheckedNewCategory] = useState(false)
-
-  const queryClient = useQueryClient()
-
-  const categoriesQuery = useQuery<ICategory[]>({
+  const { createZap } = useQuiz()
+  const { data } = useQuery<ICategory[]>({
     queryKey: ['categories'],
     queryFn: getCategories,
   })
+  const { toast } = useToast()
+
+  const [isCheckedNewCategory, setIsCheckedNewCategory] = useState(false)
 
   const form = useForm<ZapFormValues>({
     resolver: zodResolver(zapFormSchema),
@@ -76,27 +74,6 @@ export default function FormCreateZap() {
     name: 'questions',
   })
 
-  const { toast } = useToast()
-
-  const { mutate } = useMutation({
-    mutationFn: zapsQuery.createZap,
-    onError: () => {
-      toast({
-        variant: 'destructive',
-        title: 'Opss! Não foi possível criar o zap.',
-      })
-    },
-    onSuccess: () => {
-      toast({
-        variant: 'sucess',
-        title: 'Zap criado com sucesso!',
-      })
-      queryClient.invalidateQueries({ queryKey: ['zaps'] })
-
-      queryClient.invalidateQueries({ queryKey: ['categories'] })
-      router.push('/')
-    },
-  })
   function onSubmit(data: ZapFormValues) {
     if (isCheckedNewCategory) {
       data.categoryId = null
@@ -118,8 +95,7 @@ export default function FormCreateZap() {
       return
     }
 
-    const dataWithDifficulty = { ...data, difficulty: 'EASY' }
-    mutate(dataWithDifficulty)
+    createZap(data)
   }
 
   return (
@@ -184,7 +160,7 @@ export default function FormCreateZap() {
                         )}
                       >
                         {field.value
-                          ? categoriesQuery.data?.find(
+                          ? data?.find(
                               (category) => category.id === Number(field.value),
                             )?.title
                           : 'Selecionar categoria'}
@@ -199,7 +175,7 @@ export default function FormCreateZap() {
 
                       <CommandGroup>
                         <ScrollArea className="h-60 ">
-                          {categoriesQuery.data?.map((category) => (
+                          {data?.map((category) => (
                             <CommandItem
                               value={category.title}
                               key={category.id}

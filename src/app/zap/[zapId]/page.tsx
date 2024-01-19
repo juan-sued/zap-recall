@@ -7,19 +7,20 @@ import { Button } from '@/components/ui/button'
 import { IZap } from '@/interfaces/zapInterfaces'
 import zapsQuery from '@/services/zaps'
 import { useQuery } from '@tanstack/react-query'
+
 import { PlayIcon, User2 } from 'lucide-react'
 import { useParams, useRouter } from 'next/navigation'
 
 export default function ZapViewPage() {
+  const router = useRouter()
   const params = useParams()
 
-  const { data, isFetching, isError } = useQuery<IZap>({
+  const { data, isError, isFetching } = useQuery<IZap>({
     queryKey: ['zapById'],
-    queryFn: () => zapsQuery.getZapById(Number(params.zapId)),
+    queryFn: () => zapsQuery.getZapById(params.zapId),
   })
 
-  const router = useRouter()
-
+  console.log(data)
   if (data) {
     return (
       <div className="animate__animated animate__fadeIn ">

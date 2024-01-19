@@ -1,5 +1,11 @@
 import authQuery from '@/services/auth'
-import { ReactNode, createContext, useEffect, useState } from 'react'
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
 import { setCookie, destroyCookie, parseCookies } from 'nookies'
 import { IUser } from '@/interfaces/userInterfaces'
 import { useRouter } from 'next/navigation'
@@ -151,4 +157,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       {children}
     </AuthContext.Provider>
   )
+}
+export function useAuth(): AuthContextType {
+  const authContext = useContext(AuthContext)
+
+  if (!authContext) {
+    throw new Error('useAuth deve ser usado dentro de um AuthProvider')
+  }
+
+  return authContext
 }

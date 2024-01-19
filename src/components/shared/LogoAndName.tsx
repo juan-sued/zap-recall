@@ -15,6 +15,7 @@ export default function LogoAndName() {
           height="1080"
           className="animate__animated animate__fadeInBottomLeft w-36 drop-shadow-md"
           alt="Ir para Home"
+          priority
         />
         <h4 className={`${righteous.className} text-7xl drop-shadow-md`}>
           ZapRecall

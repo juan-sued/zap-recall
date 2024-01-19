@@ -2,19 +2,19 @@ import { Difficulties, IZapBasic } from '@/interfaces/zapInterfaces'
 import CardZap from '../shared/Cards/CardZap'
 import LoaderSpinner from '../shared/Loaders/LoaderSpinner/LoaderSpinner'
 
-interface IListCards {
-  listZaps: IZapBasic[] | undefined
+interface IListCardZaps {
+  zapList: IZapBasic[] | undefined
   isFetching: boolean
   isError: boolean
 }
 
-export function ListCardsZaps({ listZaps, isFetching, isError }: IListCards) {
-  if (listZaps && listZaps.length > 0) {
+export function ListCardsZaps({ zapList, isFetching, isError }: IListCardZaps) {
+  if (zapList && zapList.length > 0) {
     return (
       <>
         <div className="listCardZaps  w-full h-full p-8 sm:p-20 ">
           <div className=" h-full grid grid-cols-1  gap-4  min-[890px]:grid-cols-2 min-[1270px]:grid-cols-3 min-[1580px]:grid-cols-4  place-items-center">
-            {listZaps.map((zap, index) => {
+            {zapList.map((zap, index) => {
               let bgColor = 'bg-black'
 
               switch (zap.difficulty) {

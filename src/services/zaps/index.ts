@@ -7,8 +7,8 @@ async function getZaps() {
   return response.data
 }
 
-async function getZapById(id: number) {
-  const response = await api.get(`quizzes/${id}`)
+async function getZapById(id: number | string | string[]) {
+  const response = await api.get(`quizzes/quiz/${id}`)
   return response.data
 }
 
@@ -19,7 +19,7 @@ async function createZap(zap: ZapFormValues) {
 }
 
 async function registerAnswer(data: IObjRegisterAnswer) {
-  const response = await api.post('quizzes/answers/', data)
+  const response = await api.post('quizzes/historic/', data)
 
   return response.data
 }
