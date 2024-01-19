@@ -4,7 +4,7 @@ import { useMutation } from '@tanstack/react-query'
 import zapsQuery from '@/services/zaps'
 import { toast } from '@/components/ui/use-toast'
 import { queryClient } from '@/services/queryClient'
-import router from 'next/router'
+import { useRouter } from 'next/navigation'
 import { ZapFormValues } from '@/app/(privates-routes)/create-zap/FormCreateZap/types'
 
 type QuizContextType = {
@@ -14,9 +14,11 @@ type QuizContextType = {
 export const QuizContext = createContext({} as QuizContextType)
 
 export function QuizProvider({ children }: { children: ReactNode }) {
+  const router = useRouter()
   const createZapMutation = useMutation({
     mutationFn: zapsQuery.createZap,
-    onError: () => {
+    onError: (error) => {
+      console.log(error)
       toast({
         variant: 'destructive',
         title: 'Opss! Não foi possível criar o zap.',
@@ -33,8 +35,6 @@ export function QuizProvider({ children }: { children: ReactNode }) {
       router.push('/')
     },
   })
-
-  console.log('b')
 
   function createZap({
     title,

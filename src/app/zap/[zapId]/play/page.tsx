@@ -169,6 +169,14 @@ export default function ZapPlayPage() {
               )
             })}
           </ul>
+          <div className="flex gap-3 pt-6">
+            <Button variant="outline" className="w-full drop-shadow">
+              Deslike
+            </Button>
+            <Button variant="outline" className="w-full drop-shadow">
+              Like
+            </Button>
+          </div>
           <Button
             onClick={handleDataQuiz}
             className={cn(
