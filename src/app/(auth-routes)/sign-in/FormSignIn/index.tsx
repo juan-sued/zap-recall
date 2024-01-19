@@ -19,7 +19,7 @@ import { signInFormSchema } from './schemas'
 import { SignInFormValues } from './types'
 import Link from 'next/link'
 import { useContext, useState } from 'react'
-import { AuthContext } from '@/providers/AuthContext'
+import { useAuth } from '@/providers/useAuth'
 
 const defaultValues: Partial<SignInFormValues> = {
   email: '',
@@ -27,7 +27,7 @@ const defaultValues: Partial<SignInFormValues> = {
 }
 
 export default function FormSignIn() {
-  const { signIn } = useContext(AuthContext)
+  const { signIn } = useAuth()
 
   const form = useForm<SignInFormValues>({
     resolver: zodResolver(signInFormSchema),

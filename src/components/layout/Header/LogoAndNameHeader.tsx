@@ -15,6 +15,7 @@ export default function LogoAndNameHeader() {
           height="1080"
           className=" w-12 drop-shadow-sm  "
           alt="Ir para Home"
+          priority
         />
         <h4 className={`${righteous.className} text-sm`}>
           <strong className="font-light text-xl drop-shadow-sm">

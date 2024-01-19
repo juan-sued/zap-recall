@@ -7,11 +7,11 @@ import { Button } from '@/components/ui/button'
 import { useToast } from '@/components/ui/use-toast'
 import { IZap } from '@/interfaces/zapInterfaces'
 import { cn } from '@/lib/utils'
-import { AuthContext } from '@/providers/AuthContext'
+import { useAuth } from '@/providers/useAuth'
 import zapsQuery from '@/services/zaps'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export interface IAnswer {
   questionId: number
@@ -24,7 +24,7 @@ export interface IObjRegisterAnswer {
 }
 
 export default function ZapPlayPage() {
-  const { isAuthenticated } = useContext(AuthContext)
+  const { isAuthenticated } = useAuth()
 
   const router = useRouter()
   const { toast } = useToast()
@@ -111,10 +111,13 @@ export default function ZapPlayPage() {
 
     registerAnswer(dataQuiz)
   }
-
+  console.log(zap)
   // responsável pelos toasts pós-game
   useEffect(() => {
-    if (!zap) return
+    if (!zap) {
+      queryClient.invalidateQueries({ queryKey: ['zapById'] })
+      return
+    }
     const totalQuestions = zap.questions.length
     const correctAnswers = answerSelectedsList.filter(
       (answer) => answer.answer === 'zap',

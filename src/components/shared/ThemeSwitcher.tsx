@@ -1,4 +1,3 @@
-import { useTheme } from 'next-themes'
 import SwitcherSunAndMoon from './SwitcherSunAndMoon/SwitcherSunAndMoon'
 import {
   Tooltip,
@@ -7,26 +6,20 @@ import {
   TooltipTrigger,
 } from '../ui/tooltip'
 
-export default function ThemeSwitcher() {
-  const { theme, setTheme } = useTheme()
-  function alterTheme() {
-    if (theme === 'dark') {
-      setTheme('light')
-    } else {
-      setTheme('dark')
-    }
-  }
-
+export default function ThemeSwitcher({
+  isChecked,
+  onChange,
+}: {
+  isChecked: boolean
+  onChange: () => void
+}) {
   return (
     <div className="relative scale-[80%] left-3">
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
             <div className="tooltip ">
-              <SwitcherSunAndMoon
-                checked={theme !== 'light'}
-                onChange={alterTheme}
-              />
+              <SwitcherSunAndMoon checked={isChecked} onChange={onChange} />
             </div>
           </TooltipTrigger>
           <TooltipContent className="bg-white  text-purple-950">

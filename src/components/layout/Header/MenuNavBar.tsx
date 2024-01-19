@@ -1,6 +1,6 @@
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import ListItem from './ListItem'
-import { AuthContext } from '@/providers/AuthContext'
+import { useAuth } from '@/providers/useAuth'
 
 const MENU_BUTTONS_LOGGED = [
   { title: 'Início', link: '/' },
@@ -15,7 +15,7 @@ const MENU_BUTTONS_UNLOGGED = [
 ]
 
 export default function MenuNavBar() {
-  const { isAuthenticated } = useContext(AuthContext)
+  const { isAuthenticated } = useAuth()
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isUserAuthenticated, setIsUserAuthenticated] =
     useState(isAuthenticated)

@@ -15,11 +15,11 @@ export default function ZapViewPage() {
 
   const { data, isFetching, isError } = useQuery<IZap>({
     queryKey: ['zapById'],
-    queryFn: () => zapsQuery.getZapById(Number(params.zapId)),
+    queryFn: () => zapsQuery.getZapById(params.zapId),
   })
 
   const router = useRouter()
-
+  console.log(data)
   if (data) {
     return (
       <div className="animate__animated animate__fadeIn ">
