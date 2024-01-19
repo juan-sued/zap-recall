@@ -111,13 +111,9 @@ export default function ZapPlayPage() {
 
     registerAnswer(dataQuiz)
   }
-  console.log(zap)
   // responsável pelos toasts pós-game
   useEffect(() => {
-    if (!zap) {
-      queryClient.invalidateQueries({ queryKey: ['zapById'] })
-      return
-    }
+    if (!zap) return
     const totalQuestions = zap.questions.length
     const correctAnswers = answerSelectedsList.filter(
       (answer) => answer.answer === 'zap',

@@ -9,28 +9,23 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { IZapBasic } from '@/interfaces/zapInterfaces'
-import zapsQuery from '@/services/zaps'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useQuery } from '@tanstack/react-query'
 import { Search } from 'lucide-react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 import AddZapButton from '../shared/Buttons/AddZapButton'
 import { ListCardsZaps } from './ListCardZaps'
+import zapsQuery from '@/services/zaps'
+import { useQuery } from '@tanstack/react-query'
 
 export default function ListZaps() {
-  const [isHovered, setIsHovered] = useState(false)
-
-  // const categoriesQuery = useQuery<ICategory[]>({
-  //   queryKey: ['categories'],
-  //   queryFn: getCategories,
-  // })
-
-  const { data, isFetching, isError } = useQuery<IZapBasic[]>({
+  const zaps = useQuery<IZapBasic[]>({
     queryKey: ['zaps'],
     queryFn: zapsQuery.getZaps,
   })
+
+  const [isHovered, setIsHovered] = useState(false)
 
   const [filteredListSearch, setFilteredListSearch] = useState<
     IZapBasic[] | undefined
@@ -39,7 +34,7 @@ export default function ListZaps() {
   const handleSearch = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const searchQuery = event.target.value.toLowerCase()
 
-    const filteredZaps = data?.filter((zap) =>
+    const filteredZaps = zaps.data?.filter((zap) =>
       zap.title.toLowerCase().includes(searchQuery),
     )
 
@@ -98,9 +93,9 @@ export default function ListZaps() {
           </form>
         </Form>
         <ListCardsZaps
-          listZaps={data && !filteredListSearch ? data : filteredListSearch}
-          isFetching={isFetching}
-          isError={isError}
+          zapList={filteredListSearch ?? zaps.data}
+          isError={zaps.isError}
+          isFetching={zaps.isFetching}
         />
       </section>
     </>
