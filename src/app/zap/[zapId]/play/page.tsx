@@ -10,6 +10,7 @@ import { cn } from '@/lib/utils'
 import { useAuth } from '@/providers/useAuth'
 import zapsQuery from '@/services/zaps'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { ThumbsDown, ThumbsUp } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
@@ -34,6 +35,8 @@ export default function ZapPlayPage() {
 
   const [answerSelectedsList, setAnswerSelectedsList] = useState<IAnswer[]>([])
 
+  const [isLiked, setIsLiked] = useState<boolean | null>(null)
+  console.log(isLiked)
   function addAnswer({ questionId, answer }: IAnswer) {
     // Cria um novo array com a nova resposta adicionada
     const updatedAnswerList = [...answerSelectedsList, { questionId, answer }]
@@ -169,14 +172,28 @@ export default function ZapPlayPage() {
               )
             })}
           </ul>
-          <div className="flex gap-3 pt-6">
-            <Button variant="outline" className="w-full drop-shadow">
-              Deslike
+
+          <div className="flex gap-3 pt-6 ">
+            <Button
+              onClick={() => setIsLiked(false)}
+              className={cn(
+                `w-full drop-shadow bg-white    dark:border-red-400 dark:border hover:bg-slate-200 text-red-400 dark:bg-transparent `,
+                isDisabledButton ? 'hidden ' : 'flex',
+              )}
+            >
+              <ThumbsDown />
             </Button>
-            <Button variant="outline" className="w-full drop-shadow">
-              Like
+            <Button
+              onClick={() => setIsLiked(true)}
+              className={cn(
+                `w-full drop-shadow bg-white   dark:border-green-400 dark:border hover:bg-slate-200 text-green-400 dark:bg-transparent  `,
+                isDisabledButton ? 'hidden ' : 'flex',
+              )}
+            >
+              <ThumbsUp />
             </Button>
           </div>
+
           <Button
             onClick={handleDataQuiz}
             className={cn(
