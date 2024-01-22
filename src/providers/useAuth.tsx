@@ -61,7 +61,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         variant: 'sucess',
         title: `Cadastrado com sucesso!`,
       })
-
       router.push('/sign-in')
     },
   })
@@ -82,6 +81,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         toast({
           variant: 'destructive',
           title: 'Opss! Email ou senha inválido.',
+        })
+      } else if (error.message.includes('404')) {
+        toast({
+          variant: 'destructive',
+          title: `Opss!!! Parece que este usuário não existe.`,
         })
       } else {
         toast({

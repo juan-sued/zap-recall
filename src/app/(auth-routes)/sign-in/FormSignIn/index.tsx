@@ -18,7 +18,7 @@ import { useForm } from 'react-hook-form'
 import { signInFormSchema } from './schemas'
 import { SignInFormValues } from './types'
 import Link from 'next/link'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import { useAuth } from '@/providers/useAuth'
 
 const defaultValues: Partial<SignInFormValues> = {
@@ -39,6 +39,9 @@ export default function FormSignIn() {
 
   async function onSubmit(data: SignInFormValues) {
     setIsDisabledButton(true)
+    setTimeout(() => {
+      setIsDisabledButton(false)
+    }, 4000)
     await signIn(data)
   }
 

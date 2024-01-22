@@ -13,6 +13,7 @@ async function getZapById(id: number | string | string[]) {
 }
 
 async function createZap(zap: ZapFormValues) {
+  console.log('=========== aqui =', zap)
   const response = await api.post('quizzes/', zap)
 
   return response.data

@@ -22,6 +22,7 @@ export interface IAnswer {
 export interface IObjRegisterAnswer {
   quizId: number
   answers: IAnswer[]
+  isLiked: boolean | null
 }
 
 export default function ZapPlayPage() {
@@ -36,7 +37,6 @@ export default function ZapPlayPage() {
   const [answerSelectedsList, setAnswerSelectedsList] = useState<IAnswer[]>([])
 
   const [isLiked, setIsLiked] = useState<boolean | null>(null)
-  console.log(isLiked)
   function addAnswer({ questionId, answer }: IAnswer) {
     // Cria um novo array com a nova resposta adicionada
     const updatedAnswerList = [...answerSelectedsList, { questionId, answer }]
@@ -44,7 +44,7 @@ export default function ZapPlayPage() {
     setAnswerSelectedsList(updatedAnswerList)
   }
 
-  const [isDisabledButton, setIsDisabledButton] = useState(true)
+  const [isFinishedQuiz, setIsFinishedQuiz] = useState(false)
 
   const registerAnswerMutation = useMutation({
     mutationFn: zapsQuery.registerAnswer,
@@ -97,22 +97,19 @@ export default function ZapPlayPage() {
       router.push('/')
     },
   })
-  async function registerAnswer({ quizId, answers }: IObjRegisterAnswer) {
-    if (isAuthenticated) {
-      registerAnswerMutation.mutate({ quizId, answers })
-    } else {
-      incrementAttemptMutation.mutate(quizId)
-    }
-  }
 
   function handleDataQuiz() {
     if (!zap) return
-    const dataQuiz: IObjRegisterAnswer = {
-      quizId: zap.id,
-      answers: answerSelectedsList,
-    }
 
-    registerAnswer(dataQuiz)
+    if (isAuthenticated) {
+      registerAnswerMutation.mutate({
+        quizId: zap.id,
+        answers: answerSelectedsList,
+        isLiked,
+      })
+    } else {
+      incrementAttemptMutation.mutate(zap.id)
+    }
   }
   // responsável pelos toasts pós-game
   useEffect(() => {
@@ -124,7 +121,7 @@ export default function ZapPlayPage() {
     const accuracyPercentage = (correctAnswers / totalQuestions) * 100
     const isFinished = answerSelectedsList.length === totalQuestions
 
-    if (isFinished) setIsDisabledButton(false)
+    if (isFinished) setIsFinishedQuiz(true)
 
     if (isFinished && answerSelectedsList.length === correctAnswers) {
       toast({
@@ -173,12 +170,19 @@ export default function ZapPlayPage() {
             })}
           </ul>
 
-          <div className="flex gap-3 pt-6 ">
+          <div
+            className={cn(
+              `flex gap-3 pt-6 `,
+              isFinishedQuiz ? 'flex' : 'hidden',
+            )}
+          >
             <Button
               onClick={() => setIsLiked(false)}
               className={cn(
-                `w-full drop-shadow bg-white    dark:border-red-400 dark:border hover:bg-slate-200 text-red-400 dark:bg-transparent `,
-                isDisabledButton ? 'hidden ' : 'flex',
+                `w-full drop-shadow     `,
+                isLiked !== null && isLiked === false
+                  ? 'bg-red-400 dark:border-red-400 dark:border  text-white hover:bg-red-500  dark:bg-transparent '
+                  : 'bg-white hover:bg-slate-200  text-red-400',
               )}
             >
               <ThumbsDown />
@@ -186,8 +190,10 @@ export default function ZapPlayPage() {
             <Button
               onClick={() => setIsLiked(true)}
               className={cn(
-                `w-full drop-shadow bg-white   dark:border-green-400 dark:border hover:bg-slate-200 text-green-400 dark:bg-transparent  `,
-                isDisabledButton ? 'hidden ' : 'flex',
+                `w-full drop-shadow `,
+                isLiked
+                  ? 'bg-green-400 dark:border-green-400 dark:border  text-white hover:bg-green-500  dark:bg-transparent '
+                  : 'bg-white hover:bg-slate-200  text-green-400',
               )}
             >
               <ThumbsUp />
@@ -198,9 +204,9 @@ export default function ZapPlayPage() {
             onClick={handleDataQuiz}
             className={cn(
               `text-lg font-bold w-full  drop-shadow  bg-green-500 hover:bg-green-600  text-center hidden mt-5 active:bg-green-700 transition-all `,
-              isDisabledButton
-                ? ''
-                : 'h-[75px] block animate__animated animate__backInUp ',
+              isFinishedQuiz
+                ? 'h-[75px] block animate__animated animate__backInUp '
+                : '',
             )}
           >
             Finalizar
