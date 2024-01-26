@@ -184,8 +184,8 @@ export default function ZapPlayPage() {
               className={cn(
                 `w-full drop-shadow     `,
                 isLiked !== null && isLiked === false
-                  ? 'bg-red-400 dark:border-red-400 dark:border  text-white hover:bg-red-500  dark:bg-transparent '
-                  : 'bg-white hover:bg-slate-200  text-red-400',
+                  ? 'bg-red-400 dark:border-red-400 dark:border  text-white hover:bg-red-400  dark:transparent dark:text-blueTheme-500'
+                  : 'bg-white hover:bg-red-400  hover:text-white  text-red-400 dark:bg-blueTheme-500 dark:border-red-400 dark:border dark:hover:bg-red-400 dark:hover:text-blueTheme-500',
               )}
             >
               <ThumbsDown />
@@ -195,8 +195,8 @@ export default function ZapPlayPage() {
               className={cn(
                 `w-full drop-shadow `,
                 isLiked
-                  ? 'bg-green-400 dark:border-green-400 dark:border  text-white hover:bg-green-500  dark:bg-transparent '
-                  : 'bg-white hover:bg-slate-200  text-green-400',
+                  ? 'bg-green-400  text-white hover:bg-green-500  dark:bg-green-400 dark:text-blueTheme-500 dark:border dark:hover:bg-green-400 dark:hover:text-blueTheme-500'
+                  : 'bg-white hover:bg-green-400  hover:text-white text-green-400  dark:bg-blueTheme-500 dark:border-green-400 dark:border dark:hover:bg-green-400 dark:hover:text-blueTheme-500',
               )}
             >
               <ThumbsUp />
