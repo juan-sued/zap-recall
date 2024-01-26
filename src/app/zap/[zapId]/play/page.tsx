@@ -33,10 +33,11 @@ export default function ZapPlayPage() {
 
   const queryClient = useQueryClient()
   const zap: IZap | undefined = queryClient.getQueryData(['zapById'])
-
+  console.log(zap?.isLiked)
   const [answerSelectedsList, setAnswerSelectedsList] = useState<IAnswer[]>([])
 
   const [isLiked, setIsLiked] = useState<boolean | null>(null)
+
   function addAnswer({ questionId, answer }: IAnswer) {
     // Cria um novo array com a nova resposta adicionada
     const updatedAnswerList = [...answerSelectedsList, { questionId, answer }]
@@ -173,7 +174,9 @@ export default function ZapPlayPage() {
           <div
             className={cn(
               `flex gap-3 pt-6 `,
-              isFinishedQuiz ? 'flex' : 'hidden',
+              zap.isLiked === null && isAuthenticated && isFinishedQuiz
+                ? 'flex'
+                : 'hidden',
             )}
           >
             <Button

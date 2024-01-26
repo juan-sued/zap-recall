@@ -13,13 +13,13 @@ async function getZapById(id: number | string | string[]) {
 }
 
 async function createZap(zap: ZapFormValues) {
-  console.log('=========== aqui =', zap)
   const response = await api.post('quizzes/', zap)
 
   return response.data
 }
 
 async function registerAnswer(data: IObjRegisterAnswer) {
+  console.log('aqui: ', data)
   const response = await api.post('quizzes/historic/', data)
 
   return response.data
