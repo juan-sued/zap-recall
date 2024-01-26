@@ -20,7 +20,6 @@ export default function ZapViewPage() {
     queryFn: () => zapsQuery.getZapById(params.zapId),
   })
 
-  console.log(data)
   if (data) {
     return (
       <div className="animate__animated animate__fadeIn ">

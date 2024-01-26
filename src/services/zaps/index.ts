@@ -19,6 +19,7 @@ async function createZap(zap: ZapFormValues) {
 }
 
 async function registerAnswer(data: IObjRegisterAnswer) {
+  console.log('aqui: ', data)
   const response = await api.post('quizzes/historic/', data)
 
   return response.data

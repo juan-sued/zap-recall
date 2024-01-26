@@ -41,4 +41,5 @@ export interface IZap {
   category: ICategory
   user: IUser
   questions: IQuestions[]
+  isLiked: boolean | null
 }
