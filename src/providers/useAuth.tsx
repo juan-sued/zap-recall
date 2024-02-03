@@ -119,11 +119,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .then((data) => {
         setUser(data)
       })
-      .catch(() => {
-        toast({
-          variant: 'destructive',
-          title: 'Lamento! Não foi possível validar o login',
-        })
+      .catch((err) => {
+        if (err.response.status === 404) {
+          toast({
+            variant: 'destructive',
+            title: 'Lamento! Parece que o usuário não foi encontrado.',
+          })
+        } else {
+          toast({
+            variant: 'destructive',
+            title: 'Lamento! Não foi possível validar o login.',
+          })
+        }
       })
   }
 

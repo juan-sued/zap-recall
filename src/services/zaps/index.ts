@@ -1,6 +1,7 @@
 import { ZapFormValues } from '@/app/(privates-routes)/create-zap/FormCreateZap/types'
 import { api } from '../api'
 import { IObjRegisterAnswer } from '@/app/zap/[zapId]/play/page'
+import { id } from 'date-fns/locale'
 
 async function getZaps() {
   const response = await api.get('quizzes/')
@@ -19,13 +20,12 @@ async function createZap(zap: ZapFormValues) {
 }
 
 async function registerAnswer(data: IObjRegisterAnswer) {
-  console.log('aqui: ', data)
   const response = await api.post('quizzes/historic/', data)
 
   return response.data
 }
-async function incrementAttempt(id: number) {
-  const response = await api.post(`quizzes/attempts/${id}`, {})
+async function incrementAttempt(data: Omit<IObjRegisterAnswer, 'isLiked'>) {
+  const response = await api.post(`quizzes/attempts/`, data)
 
   return response.data
 }

@@ -33,7 +33,6 @@ export default function ZapPlayPage() {
 
   const queryClient = useQueryClient()
   const zap: IZap | undefined = queryClient.getQueryData(['zapById'])
-  console.log(zap?.isLiked)
   const [answerSelectedsList, setAnswerSelectedsList] = useState<IAnswer[]>([])
 
   const [isLiked, setIsLiked] = useState<boolean | null>(null)
@@ -57,7 +56,6 @@ export default function ZapPlayPage() {
           title: `Opss!!! ${error.message}`,
         })
       } else {
-        console.log(error.message)
         toast({
           variant: 'destructive',
           title: 'Lamento! Não foi possível salvar sua resposta',
@@ -82,7 +80,6 @@ export default function ZapPlayPage() {
           title: `Opss!!! ${error.message}`,
         })
       } else {
-        console.log(error.message)
         toast({
           variant: 'destructive',
           title: 'Lamento! Não foi possível salvar sua resposta',
@@ -109,7 +106,10 @@ export default function ZapPlayPage() {
         isLiked,
       })
     } else {
-      incrementAttemptMutation.mutate(zap.id)
+      incrementAttemptMutation.mutate({
+        quizId: zap.id,
+        answers: answerSelectedsList,
+      })
     }
   }
   // responsável pelos toasts pós-game

@@ -7,44 +7,65 @@ import {
   CardFooter,
 } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
-import { IZapBasic } from '@/interfaces/zapInterfaces'
+import { Difficulties, IZapBasic } from '@/interfaces/zapInterfaces'
 
 import { cn } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { FormattedDate, FormattedMessage } from 'react-intl'
 
-interface CardZap extends Omit<IZapBasic, 'difficulty'> {
+interface CardZap extends Omit<IZapBasic, 'createdAt'> {
   className?: string
 }
 export default function CardZap({
   id,
   title,
   description,
-  percentEndings,
+  endings,
   attempts,
   updatedAt,
-  creatAt,
-  category,
   className,
+  difficulty,
   ...props
 }: CardZap) {
   const router = useRouter()
-
-  const [isMore624px, setIsMore624px] = useState(false)
+  const [isMore624px, setIsMore624px] = useState(window.innerWidth > 640)
 
   useEffect(() => {
-    setIsMore624px(window.innerWidth > 640)
+    const handleResize = () => {
+      setIsMore624px(window.innerWidth > 640)
+    }
+    window.addEventListener('resize', handleResize)
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
   }, [])
-
   function goToZapView(id: number) {
     router.push(`/zap/${id}`)
   }
 
+  let difficultiesColor = 'bg-black'
+
+  switch (difficulty) {
+    case Difficulties.EASY:
+      difficultiesColor = 'text-green-500'
+      break
+    case Difficulties.MEDIUM:
+      difficultiesColor = 'text-yellow-500'
+      break
+    case Difficulties.HARD:
+      difficultiesColor = 'text-red-500'
+      break
+  }
+
+  const percentWins = (endings / attempts) * 100
+
+  const updateIn = new Date(updatedAt)
   return (
     <Card
       className={cn(
         'w-full  h-full max-w-[390px] grid content-between shadow-md   shadow-[rgba(0,0,0,0.2)] transition-all  hover:cursor-pointer hover:shadow-lg hover:scale-105 active:scale-95 sm:w-fit ',
-        className,
+        difficultiesColor,
       )}
       {...props}
       onClick={() => goToZapView(id)}
@@ -70,8 +91,8 @@ export default function CardZap({
 
         <Button variant="ghost">
           <div>
-            <h3 className={className}>{percentEndings}%</h3>
-            <p>Terminaram</p>
+            <h3 className={className}>{percentWins.toFixed(0)}%</h3>
+            <p>Acertaram</p>
           </div>
         </Button>
 
@@ -79,7 +100,9 @@ export default function CardZap({
 
         <Button variant="ghost">
           <div>
-            <h3 className="text-sm">{updatedAt}</h3>
+            <h3 className="text-sm">
+              <FormattedDate value={updatedAt} year="numeric" month="short" />
+            </h3>
             <p>Atualizado</p>
           </div>
         </Button>

@@ -17,8 +17,7 @@ export function QuizProvider({ children }: { children: ReactNode }) {
   const router = useRouter()
   const createZapMutation = useMutation({
     mutationFn: zapsQuery.createZap,
-    onError: (error) => {
-      console.log(error)
+    onError: () => {
       toast({
         variant: 'destructive',
         title: 'Opss! Não foi possível criar o zap.',

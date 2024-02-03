@@ -17,6 +17,8 @@ import { ListSimpleFlat } from './components/ListZapsDashboard/Index'
 import ListResumes from './components/ListResumes/Index'
 
 export default function DashboardPage() {
+  // requisição meta data user
+
   return (
     <>
       <div className="flex-col flex mt-20 animate__animated animate__fadeIn">
