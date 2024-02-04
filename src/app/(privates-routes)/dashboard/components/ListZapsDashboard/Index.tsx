@@ -27,7 +27,7 @@ export function ListSimpleFlat() {
             title={zap.title}
             description={zap.description}
             avatarFallback={zap.category[0]}
-            value={zap.percentEndings}
+            value={zap.endings}
             className={bgColor}
           />
         )
