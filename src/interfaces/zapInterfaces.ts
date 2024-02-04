@@ -13,7 +13,7 @@ export interface IZapBasic {
   description: string
   category: string
   difficulty: Difficulties
-  percentEndings: number
+  endings: number
   attempts: number
   creatAt: string
   updatedAt: string

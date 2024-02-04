@@ -1,4 +1,4 @@
-import { Difficulties, IZapBasic } from '@/interfaces/zapInterfaces'
+import { IZapBasic } from '@/interfaces/zapInterfaces'
 import CardZap from '../shared/Cards/CardZap'
 import LoaderSpinner from '../shared/Loaders/LoaderSpinner/LoaderSpinner'
 
@@ -14,36 +14,20 @@ export function ListCardsZaps({ zapList, isFetching, isError }: IListCardZaps) {
       <>
         <div className="listCardZaps  w-full h-full p-8 sm:p-20 ">
           <div className=" h-full grid grid-cols-1  gap-4  min-[890px]:grid-cols-2 min-[1270px]:grid-cols-3 min-[1580px]:grid-cols-4  place-items-center">
-            {zapList.map((zap, index) => {
-              let bgColor = 'bg-black'
-
-              switch (zap.difficulty) {
-                case Difficulties.EASY:
-                  bgColor = 'text-green-500'
-                  break
-                case Difficulties.MEDIUM:
-                  bgColor = 'text-yellow-500'
-                  break
-                case Difficulties.HARD:
-                  bgColor = 'text-red-500'
-                  break
-              }
-
-              return (
-                <CardZap
-                  key={index}
-                  id={zap.id}
-                  title={zap.title}
-                  category={zap.category}
-                  description={zap.description}
-                  percentEndings={zap.percentEndings}
-                  updatedAt={zap.updatedAt}
-                  creatAt={zap.creatAt}
-                  attempts={zap.attempts}
-                  className={bgColor}
-                />
-              )
-            })}
+            {zapList.map((zap, index) => (
+              <CardZap
+                key={index}
+                id={zap.id}
+                title={zap.title}
+                category={zap.category}
+                description={zap.description}
+                endings={zap.endings}
+                updatedAt={zap.updatedAt}
+                creatAt={zap.creatAt}
+                attempts={zap.attempts}
+                difficulty={zap.difficulty}
+              />
+            ))}
           </div>
         </div>
       </>

@@ -94,7 +94,6 @@ export default function FormCreateZap() {
 
       return
     }
-    console.log(data)
     createZap(data)
   }
 
