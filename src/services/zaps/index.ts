@@ -1,7 +1,6 @@
 import { ZapFormValues } from '@/app/(privates-routes)/create-zap/FormCreateZap/types'
 import { api } from '../api'
 import { IObjRegisterAnswer } from '@/app/zap/[zapId]/play/page'
-import { id } from 'date-fns/locale'
 
 async function getZaps() {
   const response = await api.get('quizzes/')
