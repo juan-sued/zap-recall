@@ -12,7 +12,7 @@ import { Difficulties, IZapBasic } from '@/interfaces/zapInterfaces'
 import { cn } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { FormattedDate, FormattedMessage } from 'react-intl'
+import { FormattedDate } from 'react-intl'
 
 interface CardZap extends Omit<IZapBasic, 'createdAt'> {
   className?: string
@@ -60,7 +60,6 @@ export default function CardZap({
 
   const percentWins = (endings / attempts) * 100
 
-  const updateIn = new Date(updatedAt)
   return (
     <Card
       className={cn(
@@ -91,7 +90,9 @@ export default function CardZap({
 
         <Button variant="ghost">
           <div>
-            <h3 className={className}>{percentWins.toFixed(0)}%</h3>
+            <h3 className={className}>
+              {isNaN(percentWins) ? 0 : percentWins.toFixed(0)}%
+            </h3>
             <p>Acertaram</p>
           </div>
         </Button>
