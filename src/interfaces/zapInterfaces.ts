@@ -36,7 +36,7 @@ export interface IZap {
   title: string
   description: string
   attempts: number
-  percentEndings: number
+  endings: number
   difficulty: Difficulties
   category: ICategory
   user: IUser
