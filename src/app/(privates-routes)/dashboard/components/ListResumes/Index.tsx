@@ -1,37 +1,45 @@
-import { META_DATA_LIST } from '@/Mock/MetaDataMock'
 import CardResume from './CardResume'
 import { ClipboardList, Crown, Smile, ThumbsUp } from 'lucide-react'
+import { useQueryClient } from '@tanstack/react-query'
+import { IMetaData } from '@/interfaces/metaDataInterface'
 
 export default function ListResumes() {
+  const queryClient = useQueryClient()
+  const metaData: IMetaData | undefined = queryClient.getQueryData(['metaData'])
+
   return (
     <>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <CardResume
           title="Total de Zaps"
-          value={`${META_DATA_LIST.allZaps.totalZaps}`}
-          valueDetail={`Uma média de ${META_DATA_LIST.allZaps.percentAverageCompletion}% de conclusões por zap.`}
+          value={metaData?.zaps.totalZaps ?? 0}
+          valueDetail={`Uma média de ${
+            metaData?.zaps.averageCompletion ?? 0
+          } de conclusões por zap`}
         >
           <ClipboardList />
         </CardResume>
         <CardResume
           title="Total de likes"
-          value={`${META_DATA_LIST.likes.totalLikes}`}
-          valueDetail={`Uma média de ${META_DATA_LIST.likes.averageCompletion} likes por zap.`}
+          value={metaData?.likes.totalLikes ?? 0}
+          valueDetail={`Uma média de ${
+            metaData?.likes.averageLikes ?? 0
+          } likes por zap`}
         >
           <ThumbsUp />
         </CardResume>
         <CardResume
           title="Zap campeão"
-          value={`${META_DATA_LIST.bestZap.title}`}
-          valueDetail={`${META_DATA_LIST.bestZap.percentCompletion}% de conclusões e ${META_DATA_LIST.bestZap.likes} likes!`}
+          value={metaData?.zaps.championZap.quiz.title ?? 'Nenhum'}
+          valueDetail={`${metaData?.zaps.championZap.percentConclusion}% de conclusões e ${metaData?.zaps.championZap.totalLikes} likes`}
           classNameValue="text-md"
         >
           <Crown />
         </CardResume>
         <CardResume
           title="Moral"
-          value={`${META_DATA_LIST.moral.title}`}
-          valueDetail={`Você tem ${META_DATA_LIST.moral.points} pontos de moral.`}
+          value={'Bom'}
+          valueDetail={`Você tem ${'75'} pontos de moral`}
         >
           <Smile />
         </CardResume>

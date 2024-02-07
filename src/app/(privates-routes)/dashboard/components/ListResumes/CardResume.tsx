@@ -4,7 +4,7 @@ import { ReactNode } from 'react'
 
 interface ICardResume {
   title: string
-  value: string
+  value: string | number
   valueDetail: string
   children: ReactNode
   classNameValue?: string

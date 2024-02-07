@@ -15,9 +15,15 @@ import { CalendarDateRangePicker } from './components/date-range-picker'
 import { Download } from 'lucide-react'
 import { ListSimpleFlat } from './components/ListZapsDashboard/Index'
 import ListResumes from './components/ListResumes/Index'
+import { useQuery } from '@tanstack/react-query'
+import zapsQuery from '@/services/zaps'
+import { IMetaData } from '@/interfaces/metaDataInterface'
 
 export default function DashboardPage() {
-  // requisição meta data user
+  const { data } = useQuery<IMetaData>({
+    queryKey: ['metaData'],
+    queryFn: zapsQuery.getMetaData,
+  })
 
   return (
     <>
@@ -63,7 +69,8 @@ export default function DashboardPage() {
                   <CardHeader>
                     <CardTitle>Zaps recentes</CardTitle>
                     <CardDescription>
-                      Você ajudou 265 pessoas a estudar esse mês.
+                      Você ajudou {data?.zaps.playersCount} pessoas a estudar
+                      esse mês.
                     </CardDescription>
                   </CardHeader>
                   <CardContent>

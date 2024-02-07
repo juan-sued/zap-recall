@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation'
 import { useMutation } from '@tanstack/react-query'
 import { toast } from '@/components/ui/use-toast'
 import { api } from '@/services/api'
+import { queryClient } from '@/services/queryClient'
 
 type SignInData = {
   email: string
@@ -134,10 +135,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       })
   }
 
-  function logout(): void {
+  async function logout(): Promise<void> {
     destroyCookie(undefined, 'next-auth-token')
     setUser(null)
     const firstName = user?.name.split(' ')[0]
+
+    await queryClient.clear()
 
     toast({
       variant: 'sucess',

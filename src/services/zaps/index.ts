@@ -7,6 +7,11 @@ async function getZaps() {
   return response.data
 }
 
+async function getMetaData() {
+  const response = await api.get('quizzes/historic/meta-data')
+  return response.data
+}
+
 async function getZapById(id: number | string | string[]) {
   const response = await api.get(`quizzes/quiz/${id}`)
   return response.data
@@ -35,6 +40,7 @@ const zapsQuery = {
   createZap,
   registerAnswer,
   incrementAttempt,
+  getMetaData,
 }
 
 export default zapsQuery
