@@ -20,7 +20,7 @@ export function getAPICLient(
   const DEV_URL = 'http://localhost:4000/'
 
   const api = axios.create({
-    baseURL: PRODUCTION_URL,
+    baseURL: DEV_URL,
   })
 
   if (token) api.defaults.headers.Authorization = `Bearer ${token}`

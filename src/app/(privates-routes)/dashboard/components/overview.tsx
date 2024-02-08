@@ -7,7 +7,7 @@ import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts'
 export function Overview() {
   const queryClient = useQueryClient()
   const metaData: IMetaData | undefined = queryClient.getQueryData(['metaData'])
-
+  // passar metaData por props
   if (metaData) {
     return (
       <ResponsiveContainer width="100%" height={350}>
