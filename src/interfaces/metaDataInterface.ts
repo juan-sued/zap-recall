@@ -1,14 +1,14 @@
 import { IZap } from './zapInterfaces'
 
-interface ILikeMetaData {
+export interface ILikeMetaData {
   totalLikes: number
   averageLikes: number
   totalDislikes: number
   averageDislikes: number
 }
 
-interface IChampionZap {
-  quiz: Partial<IZap>
+export interface IChampionZap {
+  quiz: IZap
   totalLikes: number
   percentConclusion: number
 }

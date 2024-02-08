@@ -1,37 +1,40 @@
 import CardResume from './CardResume'
 import { ClipboardList, Crown, Smile, ThumbsUp } from 'lucide-react'
-import { useQueryClient } from '@tanstack/react-query'
-import { IMetaData } from '@/interfaces/metaDataInterface'
+import { IChampionZap, ILikeMetaData } from '@/interfaces/metaDataInterface'
 
-export default function ListResumes() {
-  const queryClient = useQueryClient()
-  const metaData: IMetaData | undefined = queryClient.getQueryData(['metaData'])
-
+interface IListResumes extends ILikeMetaData {
+  totalZaps: number
+  averageCompletion: number
+  championZap: IChampionZap
+}
+export default function ListResumes({
+  totalZaps,
+  averageCompletion,
+  totalLikes,
+  averageLikes,
+  championZap,
+}: IListResumes) {
   return (
     <>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <CardResume
           title="Total de Zaps"
-          value={metaData?.zaps.totalZaps ?? 0}
-          valueDetail={`Uma média de ${
-            metaData?.zaps.averageCompletion ?? 0
-          } de conclusões por zap`}
+          value={totalZaps}
+          valueDetail={`Uma média de ${averageCompletion} de conclusões por zap`}
         >
           <ClipboardList />
         </CardResume>
         <CardResume
           title="Total de likes"
-          value={metaData?.likes.totalLikes ?? 0}
-          valueDetail={`Uma média de ${
-            metaData?.likes.averageLikes ?? 0
-          } likes por zap`}
+          value={totalLikes}
+          valueDetail={`Uma média de ${averageLikes} likes por zap`}
         >
           <ThumbsUp />
         </CardResume>
         <CardResume
           title="Zap campeão"
-          value={metaData?.zaps.championZap.quiz.title ?? 'Nenhum'}
-          valueDetail={`${metaData?.zaps.championZap.percentConclusion}% de conclusões e ${metaData?.zaps.championZap.totalLikes} likes`}
+          value={championZap.quiz?.title}
+          valueDetail={`${championZap.percentConclusion}% de conclusões e ${championZap.totalLikes} likes`}
           classNameValue="text-md"
         >
           <Crown />

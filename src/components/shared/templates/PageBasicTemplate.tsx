@@ -11,7 +11,7 @@ import { cn } from '@/lib/utils'
 import { ReactNode } from 'react'
 
 interface IPageBasicTemplate {
-  children: ReactNode
+  children?: ReactNode
   titlePage?: string
   cardTitle?: string
   cardDescription?: string
