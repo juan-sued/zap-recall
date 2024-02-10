@@ -18,9 +18,10 @@ import { useQuery } from '@tanstack/react-query'
 import zapsQuery from '@/services/zaps'
 import { IMetaData } from '@/interfaces/metaDataInterface'
 import PageBasicTemplate from '@/components/shared/templates/PageBasicTemplate'
+import LoaderSpinner from '@/components/shared/Loaders/LoaderSpinner/LoaderSpinner'
 
 export default function DashboardPage() {
-  const { data } = useQuery<IMetaData>({
+  const { data, isFetching, isError } = useQuery<IMetaData>({
     queryKey: ['metaData'],
     queryFn: zapsQuery.getMetaData,
   })
@@ -28,14 +29,14 @@ export default function DashboardPage() {
   function pagePdfHandler() {
     window.print()
   }
-  if (!data) {
+  if (isError) {
     return (
       <PageBasicTemplate
         cardTitle="Ops!!!"
         cardDescription="Parece que não foi possível obter os dados dados"
       />
     )
-  } else if (data.zaps.totalZaps > 0) {
+  } else if (data && data.zaps.totalZaps > 0) {
     return (
       <>
         <div className="flex-col flex mt-20 animate__animated animate__fadeIn">
@@ -107,13 +108,21 @@ export default function DashboardPage() {
         </div>
       </>
     )
-  } else if (data.zaps.totalZaps === 0) {
+  } else if (data && data.zaps.totalZaps === 0) {
     return (
       <PageBasicTemplate
         cardTitle="Ops!!!"
         cardDescription="Parece que você ainda não possui dados :("
         cardFooter="Crie um card e ajude as pessoas a estudarem"
       />
+    )
+  } else if (isFetching) {
+    return (
+      <>
+        <div className="w-screen h-screen  flex items-center justify-center">
+          <LoaderSpinner />
+        </div>
+      </>
     )
   }
 }

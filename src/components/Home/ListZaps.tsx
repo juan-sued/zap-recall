@@ -34,7 +34,7 @@ export default function ListZaps() {
   const handleSearch = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const searchQuery = event.target.value.toLowerCase()
 
-    const filteredZaps = zaps.data?.filter((zap) =>
+    const filteredZaps: any = zaps.data?.filter((zap) =>
       zap.title.toLowerCase().includes(searchQuery),
     )
 
@@ -82,7 +82,7 @@ export default function ListZaps() {
                             ? 'duration-1000 w-80 pl-10 shadow-inner'
                             : ''
                         }`}
-                        onChange={handleSearch} // Adiciona o evento onChange aqui
+                        onChange={handleSearch}
                       />
                     </div>
                   </FormControl>
