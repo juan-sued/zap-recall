@@ -30,20 +30,23 @@ export default function TableRanking() {
 
     setNameOrIdField(searchQuery)
 
-    const filteredList: IUser[] | undefined = data.filter((user) => {
-      const idMatch = user.id.toString().includes(searchQuery.toLowerCase())
-      const nameMatch = user.name
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase())
+    const filteredList: IUser[] | undefined = data
+      .filter((user) => {
+        const idMatch = user.id.toString().includes(searchQuery.toLowerCase())
+        const nameMatch = user.name
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase())
 
-      // Prioriza os elementos que possuem correspondência tanto no id quanto no name
-      return idMatch && nameMatch ? true : idMatch || nameMatch
-    })
+        // Prioriza os elementos que possuem correspondência tanto no id quanto no name
+        return idMatch && nameMatch ? true : idMatch || nameMatch
+      })
+      .sort((a, b) => b.name.length - a.name.length)
 
     setFilteredListSearch(filteredList)
   }
 
-  const listUsers = filteredListSearch ?? data
+  const listUsers =
+    filteredListSearch ?? data?.sort((a, b) => b.name.length - a.name.length)
 
   function clearFilters() {
     setNameOrIdField('')
@@ -65,10 +68,11 @@ export default function TableRanking() {
               variant="ghost"
               className={cn(
                 'text-red-600 hover:text-red-700 ',
-                nameOrIdField.length > 0
-                  ? ' animate__animated animate__fadeInLeft'
-                  : ' animate__animated animate__fadeOutLeft',
+                !nameOrIdField
+                  ? ' animate__animated animate__fadeOut'
+                  : ' animate__animated animate__fadeIn',
               )}
+              disabled={!nameOrIdField}
               onClick={clearFilters}
             >
               <FilterX />
