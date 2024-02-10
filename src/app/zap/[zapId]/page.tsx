@@ -10,6 +10,7 @@ import { useQuery } from '@tanstack/react-query'
 
 import { PlayIcon, User2 } from 'lucide-react'
 import { useParams, useRouter } from 'next/navigation'
+import { FormattedDate } from 'react-intl'
 
 export default function ZapViewPage() {
   const router = useRouter()
@@ -40,8 +41,8 @@ export default function ZapViewPage() {
             <ul className=" flex flex-col sm:flex-row  gap-3  justify-between     text-sm text-slate-800 dark:text-slate-200">
               <li>Perguntas: {data.questions.length}</li>
               <li>Categoria: {data.category.title}</li>
-              <li>Terminaram: 53</li>
-              <li>Dificuldade: Média</li>
+              <li>Terminaram: {data.endings}</li>
+              <li>Dificuldade: {data.difficulty}</li>
             </ul>
 
             <div className="border  w-[150px] sm:w-fit rounded-lg flex flex-col items-center justify-center sm:flex-row    gap-3 p-4 text-slate-800  transition-all hover:bg-slate-200 dark:hover:bg-slate-900 hover:cursor-pointer active:scale-95 ">
@@ -59,7 +60,9 @@ export default function ZapViewPage() {
                 <h3 className="text-sm text-muted-foreground  truncate">
                   {data.user.name}
                 </h3>
-                <p className="text-sm text-muted-foreground">14 Zaps</p>
+                <p className="text-sm text-muted-foreground">
+                  <FormattedDate value={data.user.createdAt} year="numeric" />
+                </p>
               </div>
             </div>
           </section>
