@@ -16,7 +16,7 @@ export function getAPICLient(
 ) {
   const { 'next-auth-token': token } = parseCookies(ctx)
 
-  const PRODUCTION_URL = 'https://zap-recall-api-8o94.onrender.com/'
+  const PRODUCTION_URL = 'https://zap-recall-api-kqp8.onrender.com'
   const DEV_URL = 'http://localhost:4000/'
 
   const api = axios.create({
